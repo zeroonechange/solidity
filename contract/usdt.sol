@@ -50,7 +50,7 @@ contract Ownable {
       * account.
       */
     function Ownable() public {
-        owner = msg.sender;
+        owner = msg.sender;   // who is the owner
     }
 
     /**
