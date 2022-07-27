@@ -1,0 +1,69 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_addr",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "attack",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/security/TelephoneAttacker.sol": "TelephoneAttacker"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/security/TelephoneAttacker.sol": {
+			"keccak256": "0x18b23373baf69b0f89d052e7757c372b376e10728a4fa9d676b7027937116858",
+			"urls": [
+				"bzz-raw://476e0ef00aa1e34ac7eae3f275cf2849db6e352f0cc7dcd2fdfc3b9bd6ae1461",
+				"dweb:/ipfs/QmTev9rbuY7LbB4dxFqx3Sydjr8aYu73yCZ84tEd1WxV46"
+			]
+		}
+	},
+	"version": 1
+}
