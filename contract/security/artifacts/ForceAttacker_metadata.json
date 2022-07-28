@@ -1,0 +1,63 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_addr",
+						"type": "address"
+					}
+				],
+				"name": "destruct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/security/ForceAttacker.sol": "ForceAttacker"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/security/ForceAttacker.sol": {
+			"keccak256": "0x9c6da6d6e3ebe70ece169e5b36f4adf68329ffc5f73d26471e0fc712b2a317c6",
+			"urls": [
+				"bzz-raw://e4d15e8441e2178aa52437fee72db7eb90a9c5caf7ecad5b9ac4d074d82df895",
+				"dweb:/ipfs/QmXxBTgsmBXQBZ2C1mZGkrNx4ngaCMS3JJGP9eKU5QFQrS"
+			]
+		}
+	},
+	"version": 1
+}
