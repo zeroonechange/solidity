@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "destroy",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/security/RecoveryAttack.sol": "SimpleToken"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/security/RecoveryAttack.sol": {
+			"keccak256": "0x7981f54b4130ea5ad186d3b959c4e0668958153c51359867dc75bc5f8686b966",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6f71ce7bacc6b667e338b36671c3b195d777f4ad9ae840b3f31f36f48fa7f189",
+				"dweb:/ipfs/QmcjgVU64YeBQCZDis2TC1bCkFn8eLUmSFhFVArQvrWGuX"
+			]
+		}
+	},
+	"version": 1
+}

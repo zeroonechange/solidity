@@ -1,0 +1,58 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "exploit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/security/RecoveryAttack.sol": "attack"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/security/RecoveryAttack.sol": {
+			"keccak256": "0x92f0907dd48593de14df566603a6807e028b74839f02ae89c7dcd713d73f98a9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0f18c74a81356e7b4555f55a9ca3b7530eae9607dcd4f152d4a23a8607fd8278",
+				"dweb:/ipfs/QmVAJjpa1dSp47pda9wL1vM3bwgfj1KSJqh7cHcZBvowhv"
+			]
+		}
+	},
+	"version": 1
+}
