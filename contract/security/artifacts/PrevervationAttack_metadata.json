@@ -8,19 +8,13 @@
 			{
 				"inputs": [
 					{
-						"internalType": "bytes8",
-						"name": "_gateKey",
-						"type": "bytes8"
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
 					}
 				],
-				"name": "enter",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
+				"name": "setTime",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			}
@@ -38,7 +32,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/security/GateAttackerLV2.sol": "Gate"
+			"contract/security/PresenvationAttack.sol": "PrevervationAttack"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -52,11 +46,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/security/GateAttackerLV2.sol": {
-			"keccak256": "0x633b7c9df3920894bca23ef687360812fd809f2237d255d6c5e0c637ddd22983",
+		"contract/security/PresenvationAttack.sol": {
+			"keccak256": "0x9157f1a921037ff3f28dccf8c6acd5e32561e07b023fcf3d8849a7ae5a520440",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://668b4f75321be9d8d560e9c2e8fe55c26e529321eec74d0c18f14aaf518038e5",
-				"dweb:/ipfs/QmR2Pnnbi8wrF6oLQpUNrgskd8xV8Nn6Ri7k2v5iiK915q"
+				"bzz-raw://5de6c1db3074503348fb013940e8315e1de3061ed486ad1bf49baa6c16ef402c",
+				"dweb:/ipfs/Qma12ZP4Co2raiwZJWz22pyhpKeqGCKEdRGKZNZefuv2dp"
 			]
 		}
 	},

