@@ -1,0 +1,77 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_solver",
+						"type": "address"
+					}
+				],
+				"name": "setSolver",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "solver",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/security/MagicNumAttack.sol": "MagicNum"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/security/MagicNumAttack.sol": {
+			"keccak256": "0xa2c11228d178a773a9618b5e71514020f777ef83644b7804e67774ae70a1dc72",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6dab79fc5e9636d87645f66bde8ecfd706553babdd3ad8a518f0cbfec86988d2",
+				"dweb:/ipfs/QmUhg6aVTqwzApPHLkNw6C5ysyW296H39MT9gzanSh1tNe"
+			]
+		}
+	},
+	"version": 1
+}
