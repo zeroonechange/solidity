@@ -6,6 +6,19 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [],
+				"name": "floor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -16,6 +29,19 @@
 				"name": "goTo",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "top",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -32,7 +58,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/security/ElevatorAK2.sol": "Elevator"
+			"contract/security/Elevator.sol": "Elevator"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -46,11 +72,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/security/ElevatorAK2.sol": {
-			"keccak256": "0x03848233816299015b58eaa57e5b90093a0581d4c5042707b0901db8af28c3ec",
+		"contract/security/Elevator.sol": {
+			"keccak256": "0x451448eb98a9b1574144d361f6f2b0fb6a2d6c2b0f1b2d39e96ca21d762206da",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://bb277f8fe47c78eee1e9a355e7bff5ffcafdc9ad149e2151fccb5605c677b226",
-				"dweb:/ipfs/QmQjkberXpfyYkB26NeAeU3zsVmcbqHwiqc59CF7AJ1qxD"
+				"bzz-raw://432d38de38b408f57e7f8a40554d90192af5d8692e412f2b476bc46d7dad4bd4",
+				"dweb:/ipfs/QmXzyWkPRoLyRghHvU4fHJC2WNhgsWwNSQqNzetE7cERaL"
 			]
 		}
 	},

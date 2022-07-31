@@ -45,19 +45,19 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"isLastFloor(uint256)": "5f9a4bca"
+			"enter(bytes8)": "3370204e"
 		}
 	},
 	"abi": [
 		{
 			"inputs": [
 				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
+					"internalType": "bytes8",
+					"name": "_gateKey",
+					"type": "bytes8"
 				}
 			],
-			"name": "isLastFloor",
+			"name": "enter",
 			"outputs": [
 				{
 					"internalType": "bool",

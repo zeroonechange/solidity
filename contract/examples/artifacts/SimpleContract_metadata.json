@@ -1,0 +1,51 @@
+{
+	"compiler": {
+		"version": "0.4.26+commit.4563c3fc"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "add",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/examples/GasCount.sol": "SimpleContract"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/examples/GasCount.sol": {
+			"keccak256": "0xe14533925c04bc7f5ff07aa2d0f4f91560feb07ce328ead9bb990b40bb382ca8",
+			"urls": [
+				"bzzr://9731ebb1731b1aef1991ea5306eee9511eb462c1703a82c0a33c0edfb82fe43e"
+			]
+		}
+	},
+	"version": 1
+}

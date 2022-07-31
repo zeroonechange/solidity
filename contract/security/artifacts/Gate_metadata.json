@@ -8,12 +8,12 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
+						"internalType": "bytes8",
+						"name": "_gateKey",
+						"type": "bytes8"
 					}
 				],
-				"name": "isLastFloor",
+				"name": "enter",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -38,7 +38,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/security/Elevator.sol": "Building"
+			"contract/security/GateAttacker.sol": "Gate"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -52,12 +52,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/security/Elevator.sol": {
-			"keccak256": "0x451448eb98a9b1574144d361f6f2b0fb6a2d6c2b0f1b2d39e96ca21d762206da",
-			"license": "MIT",
+		"contract/security/GateAttacker.sol": {
+			"keccak256": "0x7f65eed79cd0a3551ec2b845f0267c4c1641ac1082faa21a3164be0218ce1e5c",
 			"urls": [
-				"bzz-raw://432d38de38b408f57e7f8a40554d90192af5d8692e412f2b476bc46d7dad4bd4",
-				"dweb:/ipfs/QmXzyWkPRoLyRghHvU4fHJC2WNhgsWwNSQqNzetE7cERaL"
+				"bzz-raw://4a85c7f93ca2d60885399b4b258078fb069e72593b347ded9917f04210f656ae",
+				"dweb:/ipfs/QmRDzhsbcVPctfxrVN2yZZs2ZiiMdHBi8Whw8vA55xuyPC"
 			]
 		}
 	},
