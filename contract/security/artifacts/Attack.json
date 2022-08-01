@@ -1,0 +1,64 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"görli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"linkReferences": {},
+			"object": "6080604052348015600f57600080fd5b50604780601d6000396000f3fe60806040525b600115600f576005565b00fea264697066735822122049ffb6d2dfe2eb33986c94b77e06e3d011aed1b1f5027645697e0ce253a5275f64736f6c634300060c0033",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x47 DUP1 PUSH1 0x1D PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE JUMPDEST PUSH1 0x1 ISZERO PUSH1 0xF JUMPI PUSH1 0x5 JUMP JUMPDEST STOP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x49 SELFDESTRUCT 0xB6 0xD2 0xDF 0xE2 0xEB CALLER SWAP9 PUSH13 0x94B77E06E3D011AED1B1F50276 GASLIMIT PUSH10 0x7E0CE253A5275F64736F PUSH13 0x634300060C0033000000000000 ",
+			"sourceMap": "1318:84:0:-:0;;;;;;;;;;;;;;;;;;;"
+		},
+		"deployedBytecode": {
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "60806040525b600115600f576005565b00fea264697066735822122049ffb6d2dfe2eb33986c94b77e06e3d011aed1b1f5027645697e0ce253a5275f64736f6c634300060c0033",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE JUMPDEST PUSH1 0x1 ISZERO PUSH1 0xF JUMPI PUSH1 0x5 JUMP JUMPDEST STOP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x49 SELFDESTRUCT 0xB6 0xD2 0xDF 0xE2 0xEB CALLER SWAP9 PUSH13 0x94B77E06E3D011AED1B1F50276 GASLIMIT PUSH10 0x7E0CE253A5275F64736F PUSH13 0x634300060C0033000000000000 ",
+			"sourceMap": "1318:84:0:-:0;;;1378:14;1384:4;1378:14;;;;;;1318:84"
+		},
+		"gasEstimates": {
+			"creation": {
+				"codeDepositCost": "14200",
+				"executionCost": "69",
+				"totalCost": "14269"
+			},
+			"external": {
+				"": "infinite"
+			}
+		},
+		"methodIdentifiers": {}
+	},
+	"abi": [
+		{
+			"stateMutability": "payable",
+			"type": "fallback"
+		}
+	]
+}

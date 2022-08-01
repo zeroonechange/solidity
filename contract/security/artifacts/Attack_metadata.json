@@ -1,0 +1,50 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/security/Denial.sol": "Attack"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/security/Denial.sol": {
+			"keccak256": "0xebe8e6a1b3d82b54a6e154f856fd75781268d99a11760083c9740b58d6b90231",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5c8f6da656b556365926a8f7f8d22472b447c02a16caaf9b7b3bc1d043cf92e1",
+				"dweb:/ipfs/QmVPnBZ9QpPQZcuW47ocKhc74J3gcZHH9NmyPxrgkZqsSg"
+			]
+		}
+	},
+	"version": 1
+}
