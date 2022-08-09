@@ -21,6 +21,10 @@ contract Instance {
     return 'Try info2(), but with "hello" as a parameter.';
   }
 
+  function test(address mine) public pure returns (string memory){
+    mine.address
+  }
+
   function info2(string memory param) public pure returns (string memory) {
     if(keccak256(abi.encodePacked(param)) == keccak256(abi.encodePacked('hello'))) {
       return 'The property infoNum holds the number of the next info method to call.';
