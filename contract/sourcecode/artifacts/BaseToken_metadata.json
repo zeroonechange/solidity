@@ -1,0 +1,77 @@
+{
+	"compiler": {
+		"version": "0.8.4+commit.c7e474f2"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "enum TokenType",
+						"name": "tokenType",
+						"type": "uint8"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "version",
+						"type": "uint256"
+					}
+				],
+				"name": "TokenCreated",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/sourcecode/SecondUncleCoin.sol": "BaseToken"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/sourcecode/SecondUncleCoin.sol": {
+			"keccak256": "0xb0cff27cdf6a17c6201d244914d4931f4b1ba143c2e7b439222631a69a489eda",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6481eb38647a13a7e7cd2f79e2185026dadb491926709d8baf816bc12a8259ce",
+				"dweb:/ipfs/QmRm5kgRAD9PZAHsr84LscVRWir2nCMdNUFkJRKM19Firk"
+			]
+		}
+	},
+	"version": 1
+}
