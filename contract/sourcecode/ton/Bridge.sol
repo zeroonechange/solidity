@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./BridgeInterface.sol";
@@ -15,6 +15,7 @@ contract Bridge is SignatureChecker, BridgeInterface, WrappedTON {
         updateOracleSet(0, initialSet);
     }
     
+
     function generalVote(bytes32 digest, Signature[] memory signatures) internal {
       require(signatures.length >= 2 * oraclesSet.length / 3, "Not enough signatures");
       require(!finishedVotings[digest], "Vote is already finished");
@@ -31,6 +32,7 @@ contract Bridge is SignatureChecker, BridgeInterface, WrappedTON {
       finishedVotings[digest] = true;
     }
 
+    // 为了挖矿而投票   
     function voteForMinting(SwapData memory data, Signature[] memory signatures) override public {
       bytes32 _id = getSwapDataId(data);
       generalVote(_id, signatures);
@@ -54,19 +56,22 @@ contract Bridge is SignatureChecker, BridgeInterface, WrappedTON {
       mint(data);
     }
 
+    //更新 地址 
     function updateOracleSet(int oracleSetHash, address[] memory newSet) internal {
       uint oldSetLen = oraclesSet.length;
-      for(uint i = 0; i < oldSetLen; i++) {
-        isOracle[oraclesSet[i]] = false;
-      }
+      for(uint i = 0; i < oldSetLen; i++) { // 这种迭代 不非常耗gas 吗
+        isOracle[oraclesSet[i]] = false;  // 把isOracle全部设置为 false 
+      } 
       oraclesSet = newSet;
       uint newSetLen = oraclesSet.length;
       for(uint i = 0; i < newSetLen; i++) {
-        require(!isOracle[newSet[i]], "Duplicate oracle in Set");
+        require(!isOracle[newSet[i]], "Duplicate oracle in Set");  // 去掉了 免了一次写的gas消耗吧  
         isOracle[newSet[i]] = true;
       }
-      emit NewOracleSet(oracleSetHash, newSet);
+      emit NewOracleSet(oracleSetHash, newSet); // 新 oracle set 事件  oracleSetHash=0 的
     }
+
+    // 返回一个地址数组
     function getFullOracleSet() public view returns (address[] memory) {
         return oraclesSet;
     }

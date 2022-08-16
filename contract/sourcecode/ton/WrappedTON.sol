@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./ERC20.sol";
@@ -8,6 +8,7 @@ import "./TonUtils.sol";
 abstract contract WrappedTON is ERC20, TonUtils {
     bool public allowBurn;
 
+    // 挖矿 
     function mint(SwapData memory sd) internal {
       _mint(sd.receiver, sd.amount);
       emit SwapTonToEth(sd.tx.address_.workchain, sd.tx.address_.address_hash, sd.tx.tx_hash, sd.tx.lt, sd.receiver, sd.amount);
@@ -18,6 +19,7 @@ abstract contract WrappedTON is ERC20, TonUtils {
      *
      * See {ERC20-_burn}.
      */
+     // 销毁代币 
     function burn(uint256 amount, TonAddress memory addr) external {
       require(allowBurn, "Burn is currently disabled");
       _burn(msg.sender, amount);
@@ -35,15 +37,16 @@ abstract contract WrappedTON is ERC20, TonUtils {
      * - the caller must have allowance for ``accounts``'s tokens of at least
      * `amount`.
      */
+     // 销毁允许使用的代币
     function burnFrom(address account, uint256 amount, TonAddress memory addr) external {
         require(allowBurn, "Burn is currently disabled");
-        uint256 currentAllowance = allowance(account,msg.sender);
+        uint256 currentAllowance = allowance(account, msg.sender);
         require(currentAllowance >= amount, "ERC20: transfer amount exceeds allowance");
         _approve(account, msg.sender, currentAllowance - amount);
         _burn(account, amount);
         emit SwapEthToTon(account, addr.workchain, addr.address_hash, amount);
     }
-
+    // 小数点 9 位 
     function decimals() public pure override returns (uint8) {
         return 9;
     }

@@ -1,10 +1,11 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./TonUtils.sol";
 
 contract SignatureChecker is TonUtils {
 
+    // 检查 签名 
     function checkSignature(bytes32 digest, Signature memory sig) public pure {
           if (sig.signature.length != 65) {
               revert("ECDSA: invalid signature length");
