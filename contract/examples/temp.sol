@@ -9,7 +9,7 @@ contract Instance {
   bool private cleared = false;
 
   // constructor
-  constructor(string memory _password) public {
+  constructor(string memory _password) {
     password = _password;
   }
 
@@ -21,8 +21,8 @@ contract Instance {
     return 'Try info2(), but with "hello" as a parameter.';
   }
 
-  function test(address mine) public pure returns (string memory){
-    mine.address
+  function test() public pure returns (string memory){
+     return 'hello world';
   }
 
   function info2(string memory param) public pure returns (string memory) {
