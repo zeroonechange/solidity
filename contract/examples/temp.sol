@@ -8,7 +8,7 @@ contract Instance {
   string public theMethodName = 'The method name is method7123949.';
   bool private cleared = false;
 
-  // constructor
+  // constructor   changed?
   constructor(string memory _password) {
     password = _password;
   }
