@@ -1,0 +1,131 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "previousAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AdminChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "beacon",
+						"type": "address"
+					}
+				],
+				"name": "BeaconUpgraded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "version",
+						"type": "uint8"
+					}
+				],
+				"name": "Initialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "implementation",
+						"type": "address"
+					}
+				],
+				"name": "Upgraded",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"custom:oz-upgrades-unsafe-allow": "delegatecall",
+			"details": "This abstract contract provides getters and event emitting update functions for https://eips.ethereum.org/EIPS/eip-1967[EIP1967] slots. _Available since v4.1._",
+			"events": {
+				"AdminChanged(address,address)": {
+					"details": "Emitted when the admin account has changed."
+				},
+				"BeaconUpgraded(address)": {
+					"details": "Emitted when the beacon is upgraded."
+				},
+				"Upgraded(address)": {
+					"details": "Emitted when the implementation is upgraded."
+				}
+			},
+			"kind": "dev",
+			"methods": {},
+			"stateVariables": {
+				"_ADMIN_SLOT": {
+					"details": "Storage slot with the admin of the contract. This is the keccak-256 hash of \"eip1967.proxy.admin\" subtracted by 1, and is validated in the constructor."
+				},
+				"_BEACON_SLOT": {
+					"details": "The storage slot of the UpgradeableBeacon contract which defines the implementation for this proxy. This is bytes32(uint256(keccak256('eip1967.proxy.beacon')) - 1)) and is validated in the constructor."
+				},
+				"_IMPLEMENTATION_SLOT": {
+					"details": "Storage slot with the address of the current implementation. This is the keccak-256 hash of \"eip1967.proxy.implementation\" subtracted by 1, and is validated in the constructor."
+				},
+				"__gap": {
+					"details": "This empty reserved space is put in place to allow future versions to add new variables without shifting down storage in the inheritance chain. See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps"
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "ERC1967UpgradeUpgradeable"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/myProject/CNRC_V2/V2_CNRedCross.sol": {
+			"keccak256": "0x24e2c2f5358d48e2aa5b67f640f1dc0650a08c324253f939e95bf27314ac0042",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://93dddbb8f1dece8ae02c40836e714e3eeee7798aac39fb24203b4becfecaca4a",
+				"dweb:/ipfs/Qma5qRVh1kjiV7PxvBdnzCJhuRhMKGtkvd9fnAz7EFqXH4"
+			]
+		}
+	},
+	"version": 1
+}

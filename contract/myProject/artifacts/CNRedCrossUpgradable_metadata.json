@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/myProject/CNRedCross.sol": "Context"
+			"contract/myProject/CNRedCross.sol": "CNRedCrossUpgradable"
 		},
 		"evmVersion": "london",
 		"libraries": {},

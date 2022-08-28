@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/myProject/CNRedCross.sol": "Context"
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "AddressUpgradeable"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -32,12 +32,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/myProject/CNRedCross.sol": {
-			"keccak256": "0xa60af028f116f7703a29878d8503c4e64835c9e892f8c37259e50a825df4be6e",
+		"contract/myProject/CNRC_V2/V2_CNRedCross.sol": {
+			"keccak256": "0x24e2c2f5358d48e2aa5b67f640f1dc0650a08c324253f939e95bf27314ac0042",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8191f04151be65498df3c251fedb9697e0dadb48ce330061c9b526695c7cc827",
-				"dweb:/ipfs/QmNUp7d3UgV8kVFNXZ6yYmvg8Xmo8LDCaGCfwP3fGSDLJr"
+				"bzz-raw://93dddbb8f1dece8ae02c40836e714e3eeee7798aac39fb24203b4becfecaca4a",
+				"dweb:/ipfs/Qma5qRVh1kjiV7PxvBdnzCJhuRhMKGtkvd9fnAz7EFqXH4"
 			]
 		}
 	},

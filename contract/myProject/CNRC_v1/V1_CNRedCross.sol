@@ -281,9 +281,8 @@ abstract contract ERC20Burnable is Context, ERC20 {
 为了激励执行人进行帮助  酌情考虑给以一定的奖励  按照总金额还是百分比  具体如何设计？
 
 记录: 
-    第一次创建CNRC代币  发行量100个  合约地址: 0x00239a938eA0c418775E99Dcbac1f4cD9A02512B   发起人: 0x5D9C8273bce3F1fe86C55c4D0fD4844636279393
+    创建CNRC代币  发行量100个  合约地址: 0x00239a938eA0c418775E99Dcbac1f4cD9A02512B   发起人: 0x5D9C8273bce3F1fe86C55c4D0fD4844636279393
                        给 0xD6aE8250b8348C94847280928c79fb3b63cA453e  发了 5个   玩的
-
 */
 contract CNRedCross is ERC20, Ownable{
     

@@ -16,9 +16,14 @@
 						"internalType": "string",
 						"name": "symbol_",
 						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalSupply_",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
 				"type": "constructor"
 			},
 			{
@@ -44,6 +49,25 @@
 					}
 				],
 				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
 				"type": "event"
 			},
 			{
@@ -200,6 +224,24 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "name",
 				"outputs": [
@@ -210,6 +252,26 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -290,6 +352,19 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -305,7 +380,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/myProject/CNRedCross.sol": "ERC20"
+			"contract/myProject/CNRC_v1/V1_CNRedCross.sol": "CNRedCross"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -319,12 +394,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/myProject/CNRedCross.sol": {
-			"keccak256": "0xa60af028f116f7703a29878d8503c4e64835c9e892f8c37259e50a825df4be6e",
+		"contract/myProject/CNRC_v1/V1_CNRedCross.sol": {
+			"keccak256": "0x832f67dd510ce67ea5da2ac3bf66614bdf06dba650a75b5703ebabce3d84c1bb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8191f04151be65498df3c251fedb9697e0dadb48ce330061c9b526695c7cc827",
-				"dweb:/ipfs/QmNUp7d3UgV8kVFNXZ6yYmvg8Xmo8LDCaGCfwP3fGSDLJr"
+				"bzz-raw://f695f06a4d1b5168082349862d08e308a331f8e280c179e77ad57b14664c8a55",
+				"dweb:/ipfs/QmeHzp5feZr7CSx8pN4RVJpgowww5pt6VPFzXHmR2n73Vo"
 			]
 		}
 	},

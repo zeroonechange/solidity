@@ -1,0 +1,63 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "proxiableUUID",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"proxiableUUID()": {
+					"details": "Returns the storage slot that the proxiable contract assumes is being used to store the implementation address. IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this function revert if invoked through a proxy."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "IERC1822ProxiableUpgradeable"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/myProject/CNRC_V2/V2_CNRedCross.sol": {
+			"keccak256": "0x24e2c2f5358d48e2aa5b67f640f1dc0650a08c324253f939e95bf27314ac0042",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://93dddbb8f1dece8ae02c40836e714e3eeee7798aac39fb24203b4becfecaca4a",
+				"dweb:/ipfs/Qma5qRVh1kjiV7PxvBdnzCJhuRhMKGtkvd9fnAz7EFqXH4"
+			]
+		}
+	},
+	"version": 1
+}

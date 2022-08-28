@@ -6,20 +6,28 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "name_",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "symbol_",
-						"type": "string"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "previousAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AdminChanged",
+				"type": "event"
 			},
 			{
 				"anonymous": false,
@@ -52,6 +60,51 @@
 					{
 						"indexed": true,
 						"internalType": "address",
+						"name": "beacon",
+						"type": "address"
+					}
+				],
+				"name": "BeaconUpgraded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "version",
+						"type": "uint8"
+					}
+				],
+				"name": "Initialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
 						"name": "from",
 						"type": "address"
 					},
@@ -69,6 +122,19 @@
 					}
 				],
 				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "implementation",
+						"type": "address"
+					}
+				],
+				"name": "Upgraded",
 				"type": "event"
 			},
 			{
@@ -201,6 +267,31 @@
 			},
 			{
 				"inputs": [],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "name",
 				"outputs": [
 					{
@@ -210,6 +301,39 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "proxiableUUID",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -290,11 +414,65 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newImplementation",
+						"type": "address"
+					}
+				],
+				"name": "upgradeTo",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newImplementation",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "upgradeToAndCall",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"proxiableUUID()": {
+					"details": "Implementation of the ERC1822 {proxiableUUID} function. This returns the storage slot used by the implementation. It is used to validate that the this implementation remains valid after an upgrade. IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier."
+				},
+				"upgradeTo(address)": {
+					"details": "Upgrade the implementation of the proxy to `newImplementation`. Calls {_authorizeUpgrade}. Emits an {Upgraded} event."
+				},
+				"upgradeToAndCall(address,bytes)": {
+					"details": "Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call encoded in `data`. Calls {_authorizeUpgrade}. Emits an {Upgraded} event."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -305,7 +483,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/myProject/CNRedCross.sol": "ERC20"
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "CNRedCrossUpgradeable"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -319,12 +497,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/myProject/CNRedCross.sol": {
-			"keccak256": "0xa60af028f116f7703a29878d8503c4e64835c9e892f8c37259e50a825df4be6e",
+		"contract/myProject/CNRC_V2/V2_CNRedCross.sol": {
+			"keccak256": "0x24e2c2f5358d48e2aa5b67f640f1dc0650a08c324253f939e95bf27314ac0042",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8191f04151be65498df3c251fedb9697e0dadb48ce330061c9b526695c7cc827",
-				"dweb:/ipfs/QmNUp7d3UgV8kVFNXZ6yYmvg8Xmo8LDCaGCfwP3fGSDLJr"
+				"bzz-raw://93dddbb8f1dece8ae02c40836e714e3eeee7798aac39fb24203b4becfecaca4a",
+				"dweb:/ipfs/Qma5qRVh1kjiV7PxvBdnzCJhuRhMKGtkvd9fnAz7EFqXH4"
 			]
 		}
 	},
