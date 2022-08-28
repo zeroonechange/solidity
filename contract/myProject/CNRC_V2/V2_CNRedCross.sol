@@ -961,6 +961,24 @@ abstract contract UUPSUpgradeable is Initializable, IERC1822ProxiableUpgradeable
                     1967号协议   https://eips.ethereum.org/EIPS/eip-1967 
     owner  ->  proxy  ->  upgradeable contract  1
                       ->  upgradeable contract  2 
+
+step 0:
+    deploy with Proxy： name = CNRC Proxy   symbol = CNRCP  totalSupple=100 
+step 1:
+    Deploy with Proxy will initiate two (2) transactions:
+    Deploying the implementation contract
+    Deploying an ERC1967 proxy contract
+    --wallet confirm
+step 2:
+    Confirm you want to deploy an ERC1967 proxy contract that is connected to your implementation. 
+    For more info on ERC1967, see: https://docs.openzeppelin.com/contracts/4.x/api/proxy#ERC1967Proxy
+    --wallet confirm 
+
+    会创建一个 CNREDCROSSUPGRADEABLE  : 0x5c8D1C78f800526FEE40E24CA19Dab27a8b90aF9
+              ERC1967PROXY :   0x2E51a4beF35d885a3D5C6a8A1fa300c9D594709D      
+
+    通过 Proxy 去调用 initialize()  去初始化可升级合约 
+
 */
 contract CNRedCrossUpgradeable is Initializable, ERC20Upgradeable, OwnableUpgradeable, UUPSUpgradeable{
     
@@ -968,15 +986,22 @@ contract CNRedCrossUpgradeable is Initializable, ERC20Upgradeable, OwnableUpgrad
         _disableInitializers();
     }
 
-    function initialize() initializer public{
-        __ERC20_init("", "");
+    function initialize(
+        string memory name_,  // China Red Cross U
+        string memory symbol_, // CNRCU
+        uint256 totalSupply_
+    ) initializer public{
+        __ERC20_init(name_, symbol_);
+        __Ownable_init();
+        __UUPSUpgradeable_init();
+        _mint(msg.sender, totalSupply_);
     }
 
-    function mint(address to, uint256 amount) public {
+    function mint(address to, uint256 amount) public onlyOwner{
         _mint(to, amount);
     }
 
     function _authorizeUpgrade(address newImpl) internal onlyOwner override{
-
+        
     }
 }
