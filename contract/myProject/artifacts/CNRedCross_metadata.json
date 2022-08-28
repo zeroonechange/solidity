@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/myProject/CNRedCross.sol": "CNRedCross"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/myProject/CNRedCross.sol": {
+			"keccak256": "0x30ef3adaea62e10d1de995de9187cac07f6aafb8b307cdb1d386370def418ca8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8c9ac43567c71cb9162146182c2274e50895e5f87518f4c343ab278016a63315",
+				"dweb:/ipfs/QmUbvo8tnAQJi1kA3BvBgF3F2GFTe1mziYwLpMn86f211w"
+			]
+		}
+	},
+	"version": 1
+}

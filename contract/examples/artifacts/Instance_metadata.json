@@ -194,11 +194,11 @@
 	},
 	"sources": {
 		"contract/examples/temp.sol": {
-			"keccak256": "0x59f6ba9dae67f13230f9da4aaad0adeb8bc43336c320ad1f578b8a35cbcb5654",
+			"keccak256": "0xc4f9c66733f79d5f87c3efad07167622c53054bb6a59799c01511286539a0a29",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c3e9cebaa18d0adf42dbf163c0ab528af391c74d8aff2575b989cd5a6029b4b6",
-				"dweb:/ipfs/QmPuq9WVfDQsqAjRUCmLczWqoNjwo863hDArT6rxr9YWsx"
+				"bzz-raw://65cab229e5c0599bd39a2cddee90aea3253f06eff8ca97114a10f1c24668feed",
+				"dweb:/ipfs/QmaTUHG3k9HuzDYSm6kxrjBLEPJcMR6zohERNA8nBEPuh2"
 			]
 		}
 	},
