@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/myProject/CNRC_v1/V1_CNRedCross.sol": "Context"
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "StorageSlot"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -32,12 +32,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contract/myProject/CNRC_v1/V1_CNRedCross.sol": {
-			"keccak256": "0x15a73acc8bac23d509abd16e655cb03886a24d73228d65501c01100bf2d877f6",
+		"contract/myProject/CNRC_V2/V2_CNRedCross.sol": {
+			"keccak256": "0xa5533b684e611bd44c47efbd15455b466f7271e1fc8c5cd318521a9061a7a087",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3f990b9f44dea4fa13a68ed40cdaa0c9c5de1dd22f0de79986dfd637457727b8",
-				"dweb:/ipfs/QmU9bviUKcUrH3z3bR9RVkdekJ2Mv1R26F8G23c3jkz71X"
+				"bzz-raw://1823a45dade8c659c73b1c431e2abb6345505710c8b7e69b58304a9336abf698",
+				"dweb:/ipfs/QmNxdy54JodZWLeX7fFenkYXntGqJfUK1tn4UN375p3Cci"
 			]
 		}
 	},

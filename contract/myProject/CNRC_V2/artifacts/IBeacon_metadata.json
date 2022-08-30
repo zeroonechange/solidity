@@ -1,0 +1,63 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "implementation",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"implementation()": {
+					"details": "Must return an address that can be used as a delegate call target. {BeaconProxy} will check that this address is a contract."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "IBeacon"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contract/myProject/CNRC_V2/V2_CNRedCross.sol": {
+			"keccak256": "0xa5533b684e611bd44c47efbd15455b466f7271e1fc8c5cd318521a9061a7a087",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1823a45dade8c659c73b1c431e2abb6345505710c8b7e69b58304a9336abf698",
+				"dweb:/ipfs/QmNxdy54JodZWLeX7fFenkYXntGqJfUK1tn4UN375p3Cci"
+			]
+		}
+	},
+	"version": 1
+}

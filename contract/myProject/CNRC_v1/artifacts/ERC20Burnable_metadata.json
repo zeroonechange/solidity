@@ -335,11 +335,11 @@
 	},
 	"sources": {
 		"contract/myProject/CNRC_v1/V1_CNRedCross.sol": {
-			"keccak256": "0x832f67dd510ce67ea5da2ac3bf66614bdf06dba650a75b5703ebabce3d84c1bb",
+			"keccak256": "0x15a73acc8bac23d509abd16e655cb03886a24d73228d65501c01100bf2d877f6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f695f06a4d1b5168082349862d08e308a331f8e280c179e77ad57b14664c8a55",
-				"dweb:/ipfs/QmeHzp5feZr7CSx8pN4RVJpgowww5pt6VPFzXHmR2n73Vo"
+				"bzz-raw://3f990b9f44dea4fa13a68ed40cdaa0c9c5de1dd22f0de79986dfd637457727b8",
+				"dweb:/ipfs/QmU9bviUKcUrH3z3bR9RVkdekJ2Mv1R26F8G23c3jkz71X"
 			]
 		}
 	},
