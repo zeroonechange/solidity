@@ -50,26 +50,11 @@
 		"gasEstimates": null,
 		"methodIdentifiers": {
 			"owner()": "8da5cb5b",
-			"readSlot(uint256)": "02ce8af3",
 			"renounceOwnership()": "715018a6",
-			"transferOwnership(address)": "f2fde38b",
-			"writeSlot(uint256)": "ec16f087"
+			"transferOwnership(address)": "f2fde38b"
 		}
 	},
 	"abi": [
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "uint8",
-					"name": "version",
-					"type": "uint8"
-				}
-			],
-			"name": "Initialized",
-			"type": "event"
-		},
 		{
 			"anonymous": false,
 			"inputs": [
@@ -103,25 +88,6 @@
 			"type": "function"
 		},
 		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "_idx",
-					"type": "uint256"
-				}
-			],
-			"name": "readSlot",
-			"outputs": [
-				{
-					"internalType": "bytes32",
-					"name": "result",
-					"type": "bytes32"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
 			"inputs": [],
 			"name": "renounceOwnership",
 			"outputs": [],
@@ -137,19 +103,6 @@
 				}
 			],
 			"name": "transferOwnership",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "_idx",
-					"type": "uint256"
-				}
-			],
-			"name": "writeSlot",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"

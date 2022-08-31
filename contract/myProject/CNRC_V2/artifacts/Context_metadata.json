@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "Address"
+			"contract/myProject/CNRC_V2/V2_CNRedCross.sol": "Context"
 		},
 		"evmVersion": "london",
 		"libraries": {},
