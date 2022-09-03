@@ -1,0 +1,89 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\V2_CNRedCross.sol": {
+      "lastModificationDate": 1662223205579,
+      "contentHash": "23e2f05886a9ece849ec17743a914bf3",
+      "sourceName": "contracts/V2_CNRedCross.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Address",
+        "Context",
+        "ContextUpgradeable",
+        "ERC1967Proxy",
+        "ERC1967Upgrade",
+        "IBeacon",
+        "IERC1822Proxiable",
+        "Initializable",
+        "Ownable",
+        "OwnableUpgradeable",
+        "Params",
+        "Proxy",
+        "ProxyAdmin",
+        "StorageSlot",
+        "TransparentUpgradeableProxy"
+      ]
+    },
+    "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\Token.sol": {
+      "lastModificationDate": 1662225507139,
+      "contentHash": "941c1ca49583827e308f5a2d78ea6bcc",
+      "sourceName": "contracts/Token.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Token"
+      ]
+    }
+  }
+}
