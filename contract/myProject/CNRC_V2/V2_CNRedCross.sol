@@ -979,10 +979,6 @@ contract ERC1967Proxy is Proxy, ERC1967Upgrade {
 }
 
 contract TransparentUpgradeableProxy is ERC1967Proxy {
-
-
-    mapping(string => uint256) private uint256Params;
-
     /**
      * @dev Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`, and
      * optionally initialized with `_data` as explained in {ERC1967Proxy-constructor}.
@@ -1182,28 +1178,39 @@ contract ProxyAdmin is Ownable {
 }
 
 // 具体逻辑合约  没构造函数
-contract Params {
-// contract Params is Initializable, OwnableUpgradeable {
-
+contract Params is Initializable, OwnableUpgradeable {
     
-    // function initialize() public initializer {
-        // __Context_init_unchained();
-        // __Ownable_init_unchained();
-    // }
+    function initialize() public initializer {
+        __Context_init_unchained();
+        __Ownable_init_unchained();
+    }
 
     mapping(string => uint256) private uint256Params;
 
     event Uint256ParamSetted(string indexed _key, uint256 _value);
 
+
+    // SET a=4   cd4fe8cd0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000
     function SetUint256Param(string memory _key, uint256 _value)
         external
-        // onlyOwner
+        onlyOwner
     {
         uint256Params[_key] = _value;
         emit Uint256ParamSetted(_key, _value);
     }
 
+    // GET a    4e678e80000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000
     function GetUint256Param(string memory _key) public view returns (uint256) {
-        return uint256Params[_key];
+        uint256 v = uint256Params[_key];
+        return v;
     }
 }
+
+/**
+Params      只作为具体逻辑的合约  不参与任何的数据存储   
+TransparentUpgradeableProxy    作为代理合约  通过这个去调用具体的逻辑合约  实现数据-逻辑分离
+ProxyAdmin  只负责管理代理合约  升级  设置新的逻辑合约  一般控制这个就能控制  整个系统  
+本次实操 在 remix上完成  通过 debugger 去看结果   感觉还是太慢了   一步步操作   如果能用 hardhat 写个脚本 那就更好了
+脚本 部署  测试
+
+*/
