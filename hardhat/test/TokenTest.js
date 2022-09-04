@@ -76,5 +76,6 @@ describe("可升级合约测试", function () {
 
     expect(txGet).to.equal(10);
 
+    
   });
 });
