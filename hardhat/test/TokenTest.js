@@ -1,20 +1,5 @@
+const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 const { expect } = require("chai");
-
-describe("Token contract", function () {
-  it("Deployment should assign the total supply of tokens to the owner", async function () {
-    const [owner] = await ethers.getSigners();
-
-    const Token = await ethers.getContractFactory("Token");
-
-    const hardhatToken = await Token.deploy();
-
-    const ownerBalance = await hardhatToken.balanceOf(owner.address);
-
-    expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
-
-  });
-});
-
 
 /**
  * 1.部署合约
@@ -30,8 +15,7 @@ describe("Token contract", function () {
  */
 describe("可升级合约测试", function () {
 
-  it("1.部署三个合约", async function () {
-
+  async function deployTokenFixture(){
     const Params = await ethers.getContractFactory("Params");
     const paramsToken = await Params.deploy();
     
@@ -45,17 +29,52 @@ describe("可升级合约测试", function () {
     const _data = "0x8129fc1c";   // kecca256("initialize()") = 0x8129fc1c
     const transparentUpgradeableProxyToken = await TransparentUpgradeableProxy.deploy(_logic, admin_, _data);  
 
-    const implementation = paramsToken.address;
+    const implementationAddress = paramsToken.address;
     const adminProxyAddress = proxyAdminToken.address;
     const proxyAddress = transparentUpgradeableProxyToken.address;
+    console.log("逻辑合约:" + implementationAddress)
+    console.log("管理合约:" + adminProxyAddress)
+    console.log("代理合约:" + proxyAddress)
+    return {proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress };
+  }
 
-    expect(await proxyAdminToken.getProxyImplementation(proxyAddress)).to.equal(implementation)
+  it("1.部署三个合约", async function(){
+    const { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress } = await loadFixture(deployTokenFixture);
+    expect(await proxyAdminToken.getProxyImplementation(proxyAddress)).to.equal(implementationAddress)
     expect(await proxyAdminToken.getProxyAdmin(proxyAddress)).to.equal(adminProxyAddress)
-
   });
 
   it("2.通过 fallback 调用 set / get 方法 ", async function() {
+    const { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress } = await loadFixture(deployTokenFixture);
+    const signer = await ethers.getSigner()
+    // SetUint256Param(_key=a, _value=10) 
+    const setAbiData = '0xcd4fe8cd0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000';
+    await signer.sendTransaction({
+      to: proxyAddress,
+      data: setAbiData
+    });
+
+    // SetUint256Param(_key=a) 
+    const getAbiData = '0x4e678e80000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000';
+    const txGet = await signer.sendTransaction({
+      to: proxyAddress,
+      data: getAbiData
+    });
+    
+    const filter = {
+                address: proxyAddress,
+                topics: [
+                    utils.id("Transfer(address,address,uint256)")
+                ]
+            }
+    provider.on(filter, (log, event) => {
+        // Emitted whenever a DAI token transfer occurs
+    })
+
+    console.log("callback 返回的数据 : " + txGet.blockHash )
+    console.log("callback 返回的数据 : " + txGet.raw )
+
+    expect(txGet).to.equal(10);
 
   });
-
 });
