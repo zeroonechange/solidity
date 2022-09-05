@@ -20,6 +20,7 @@ contract Token {
     // what happens within your contract.
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
+    event Fuck(string indexed msg);
     /**
      * Contract initialization.
      */
@@ -58,5 +59,13 @@ contract Token {
      */
     function balanceOf(address account) external view returns (uint256) {
         return balances[account];
+    }
+
+    function hello() public view returns (string memory){
+        return "hello world";
+    }
+
+    fallback() external payable {
+       emit Fuck("COPYTHAT");
     }
 }

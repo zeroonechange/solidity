@@ -51,8 +51,8 @@
       ]
     },
     "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\Token.sol": {
-      "lastModificationDate": 1662225507139,
-      "contentHash": "941c1ca49583827e308f5a2d78ea6bcc",
+      "lastModificationDate": 1662395235898,
+      "contentHash": "9f98e555fffbe5fac666c839d0c86542",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.9",

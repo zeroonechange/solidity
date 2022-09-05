@@ -1,5 +1,6 @@
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
 /**
  * 1.部署合约
@@ -15,10 +16,55 @@ const { expect } = require("chai");
  */
 describe("可升级合约测试", function () {
 
-  async function deployTokenFixture(){
+  it("Test Token Hello World", async function () {
+
+    // 部署合约   
+    const token = await ethers.getContractFactory("Token");
+    const Token = await token.deploy();
+    console.log("after deployed : " + Token.address);
+    
+    // 常规方法调用
+    let result = await Token.hello();
+    console.log("hello result is : " + result);
+    expect(result).to.equal("hello world");
+    // 用 sendTransaction方法 去调用  fallback 函数   看如何拿到返回值 打印出来  
+    let _value = ethers.utils.parseEther("1.0");
+    let tx = {
+      to: Token.address,
+      // value: _value,
+      data: "0x19ff1d21" // 19ff1d21
+    }
+
+    Token.on("Fuck", (msg) => {
+      console.log("receive event: " + msg)
+    });
+
+    const signer = await ethers.getSigner();
+    let to_ = Token.address;
+
+    console.log("my wallet address is: " + signer.address  + " and contract address is : " + to_);
+    
+    const setAbiData = '0x19ff1d21';
+    let fall = await signer.sendTransaction({
+      to: Token.address,
+      data: setAbiData
+    });
+
+    await expect(fall).to.emit(Token, "Fuck").withArgs("COPYTHAT");
+
+    // let fallResult = await Token.signer.sendTransaction(tx);
+    // console.log("fallReulst: " + fallResult );
+    // console.log("fallReulst: " + fallResult.transactionHash );
+    
+  });
+
+
+  return;
+
+  async function deployTokenFixture() {
     const Params = await ethers.getContractFactory("Params");
     const paramsToken = await Params.deploy();
-    
+
     const ProxyAdmin = await ethers.getContractFactory("ProxyAdmin");
     const proxyAdminToken = await ProxyAdmin.deploy();
 
@@ -27,7 +73,7 @@ describe("可升级合约测试", function () {
     const _logic = paramsToken.address;
     const admin_ = proxyAdminToken.address;
     const _data = "0x8129fc1c";   // kecca256("initialize()") = 0x8129fc1c
-    const transparentUpgradeableProxyToken = await TransparentUpgradeableProxy.deploy(_logic, admin_, _data);  
+    const transparentUpgradeableProxyToken = await TransparentUpgradeableProxy.deploy(_logic, admin_, _data);
 
     const implementationAddress = paramsToken.address;
     const adminProxyAddress = proxyAdminToken.address;
@@ -35,16 +81,16 @@ describe("可升级合约测试", function () {
     console.log("逻辑合约:" + implementationAddress)
     console.log("管理合约:" + adminProxyAddress)
     console.log("代理合约:" + proxyAddress)
-    return {proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress };
+    return { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress };
   }
 
-  it("1.部署三个合约", async function(){
+  it("1.部署三个合约", async function () {
     const { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress } = await loadFixture(deployTokenFixture);
     expect(await proxyAdminToken.getProxyImplementation(proxyAddress)).to.equal(implementationAddress)
     expect(await proxyAdminToken.getProxyAdmin(proxyAddress)).to.equal(adminProxyAddress)
   });
 
-  it("2.通过 fallback 调用 set / get 方法 ", async function() {
+  it("2.通过 fallback 调用 set / get 方法 ", async function () {
     const { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress } = await loadFixture(deployTokenFixture);
     const signer = await ethers.getSigner()
     // SetUint256Param(_key=a, _value=10) 
@@ -60,22 +106,21 @@ describe("可升级合约测试", function () {
       to: proxyAddress,
       data: getAbiData
     });
-    
+
     const filter = {
-                address: proxyAddress,
-                topics: [
-                    utils.id("Transfer(address,address,uint256)")
-                ]
-            }
+      address: proxyAddress,
+      topics: [
+        utils.id("Transfer(address,address,uint256)")
+      ]
+    }
     provider.on(filter, (log, event) => {
-        // Emitted whenever a DAI token transfer occurs
+      // Emitted whenever a DAI token transfer occurs
     })
 
-    console.log("callback 返回的数据 : " + txGet.blockHash )
-    console.log("callback 返回的数据 : " + txGet.raw )
+    console.log("callback 返回的数据 : " + txGet.blockHash)
+    console.log("callback 返回的数据 : " + txGet.raw)
 
     expect(txGet).to.equal(10);
-
-    
   });
+
 });
