@@ -35,10 +35,6 @@ describe("可升级合约测试", function () {
       data: "0x19ff1d21" // 19ff1d21
     }
 
-    Token.on("Fuck", (msg) => {
-      console.log("receive event: " + msg)
-    });
-
     const signer = await ethers.getSigner();
     let to_ = Token.address;
 
@@ -49,12 +45,20 @@ describe("可升级合约测试", function () {
       to: Token.address,
       data: setAbiData
     });
-
+  
     await expect(fall).to.emit(Token, "Fuck").withArgs("COPYTHAT");
 
-    // let fallResult = await Token.signer.sendTransaction(tx);
-    // console.log("fallReulst: " + fallResult );
-    // console.log("fallReulst: " + fallResult.transactionHash );
+    await expect(hardhatToken.transfer(addr1.address, 50))
+                .to.emit(hardhatToken, "Fuck")
+                .withArgs("nothing");
+
+
+            await expect(owner.sendTransaction({
+                to: hardhatToken.address,
+                data: "0x"
+            }))
+                .to.emit(hardhatToken, "Bro")
+                .withArgs("fallback");
     
   });
 
