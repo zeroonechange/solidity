@@ -1,150 +1,122 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
+const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
-/**
- * 1.部署合约
- *    Params
- *    ProxyAdmin
- *    TransparentUpgradeableProxy
- * 
- * 2.通过 TransparentUpgradeableProxy.fallback  用 delegatecall 调用 Params 的 set 和 get 方法 
- * 
- * 3.修改 Params 合约   通过 ProxyAdmin 进行升级 
- * 
- * 4.重复2 过程   看返回是否是新逻辑 
- */
-describe("可升级合约测试", function () {
+describe("Token contract", function () {
 
-  it("Test Token Hello World", async function () {
-
-    // 部署合约   
-    const token = await ethers.getContractFactory("Token");
-    const Token = await token.deploy();
-    console.log("after deployed : " + Token.address);
-    
-    // 常规方法调用
-    let result = await Token.hello();
-    console.log("hello result is : " + result);
-    expect(result).to.equal("hello world");
-    // 用 sendTransaction方法 去调用  fallback 函数   看如何拿到返回值 打印出来  
-    let _value = ethers.utils.parseEther("1.0");
-    let tx = {
-      to: Token.address,
-      // value: _value,
-      data: "0x19ff1d21" // 19ff1d21
-    }
-
-    const signer = await ethers.getSigner();
-    let to_ = Token.address;
-
-    console.log("my wallet address is: " + signer.address  + " and contract address is : " + to_);
-    
-    const setAbiData = '0x19ff1d21';
-    let fall = await signer.sendTransaction({
-      to: Token.address,
-      data: setAbiData
-    });
-    await expect(hardhatToken.transfer(addr1.address, 50))
-        .to.emit(hardhatToken, "Fuck")
-        .withArgs("nothing");
-
-
-    await expect(owner.sendTransaction({
-        to: hardhatToken.address,
-        data: "0x"  // 0x  调用了 fallback 
-    }))
-        .to.emit(hardhatToken, "Bro")
-        .withArgs("fallback");
-
-
-    await expect(owner.sendTransaction({
-        to: hardhatToken.address,
-        data: "0x19ff1d21"  // 0x19ff1d21 是 hello() 的hash值 
-    }))
-        .to.emit(hardhatToken, "Bro")
-        .withArgs("hello");
-   
-  });
-
-
-  return;
-  
-  
-      async function deployment(){
-        const code = await ethers.getContractFactory("Token");
-        const [owner, add1, add2] = await ethers.getSigners();
-        const Token = await code.deploy(); 
-        await Token.deployed(); 
-        return {code, Token, owner, add1, add2};
-    }
-
-    describe("test", function(){
-        const {Token, owner} = await deployment();
-        owner.sendTransaction({to: Token.address , data:  '0x'});
-    });
-  
-  
   async function deployTokenFixture() {
-    const Params = await ethers.getContractFactory("Params");
-    const paramsToken = await Params.deploy();
 
-    const ProxyAdmin = await ethers.getContractFactory("ProxyAdmin");
-    const proxyAdminToken = await ProxyAdmin.deploy();
+    const [owner, addr1, addr2] = await ethers.getSigners();
 
-    // address _logic, address admin_, bytes memory _data
-    const TransparentUpgradeableProxy = await ethers.getContractFactory("TransparentUpgradeableProxy");
-    const _logic = paramsToken.address;
-    const admin_ = proxyAdminToken.address;
-    const _data = "0x8129fc1c";   // kecca256("initialize()") = 0x8129fc1c
-    const transparentUpgradeableProxyToken = await TransparentUpgradeableProxy.deploy(_logic, admin_, _data);
+    const Token = await ethers.getContractFactory("Token");
+    const hardhatToken = await Token.deploy();
+    await hardhatToken.deployed();
 
-    const implementationAddress = paramsToken.address;
-    const adminProxyAddress = proxyAdminToken.address;
-    const proxyAddress = transparentUpgradeableProxyToken.address;
-    console.log("逻辑合约:" + implementationAddress)
-    console.log("管理合约:" + adminProxyAddress)
-    console.log("代理合约:" + proxyAddress)
-    return { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress };
+    const Logic = await ethers.getContractFactory("Logic");
+    const logicToken = await Token.deploy();
+    await logicToken.deployed();
+
+    await hardhatToken.setImpl(logicToken.address);
+
+    return { Token, hardhatToken, logicToken, owner, addr1, addr2 };
   }
 
-  it("1.部署三个合约", async function () {
-    const { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress } = await loadFixture(deployTokenFixture);
-    expect(await proxyAdminToken.getProxyImplementation(proxyAddress)).to.equal(implementationAddress)
-    expect(await proxyAdminToken.getProxyAdmin(proxyAddress)).to.equal(adminProxyAddress)
-  });
+  describe("Deployment", function () {
+    it("Should set the right owner", async function () {
+      // We use loadFixture to setup our environment, and then assert that
+      // things went well
+      const { hardhatToken, owner } = await loadFixture(deployTokenFixture);
 
-  it("2.通过 fallback 调用 set / get 方法 ", async function () {
-    const { proxyAdminToken, implementationAddress, adminProxyAddress, proxyAddress } = await loadFixture(deployTokenFixture);
-    const signer = await ethers.getSigner()
-    // SetUint256Param(_key=a, _value=10) 
-    const setAbiData = '0xcd4fe8cd0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000';
-    await signer.sendTransaction({
-      to: proxyAddress,
-      data: setAbiData
+      // `expect` receives a value and wraps it in an assertion object. These
+      // objects have a lot of utility methods to assert values.
+
+      // This test expects the owner variable stored in the contract to be
+      // equal to our Signer's owner.
+      expect(await hardhatToken.owner()).to.equal(owner.address);
     });
 
-    // SetUint256Param(_key=a) 
-    const getAbiData = '0x4e678e80000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000';
-    const txGet = await signer.sendTransaction({
-      to: proxyAddress,
-      data: getAbiData
+    it("Should assign the total supply of tokens to the owner", async function () {
+      const { hardhatToken, owner } = await loadFixture(deployTokenFixture);
+      const ownerBalance = await hardhatToken.balanceOf(owner.address);
+      expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
+    });
+  });
+
+  /* describe("Transactions", function () {
+    it("Should transfer tokens between accounts", async function () {
+      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(
+        deployTokenFixture
+      );
+      // Transfer 50 tokens from owner to addr1
+      await expect(
+        hardhatToken.transfer(addr1.address, 50)
+      ).to.changeTokenBalances(hardhatToken, [owner, addr1], [-50, 50]);
+
+      // Transfer 50 tokens from addr1 to addr2
+      // We use .connect(signer) to send a transaction from another account
+      await expect(
+        hardhatToken.connect(addr1).transfer(addr2.address, 50)
+      ).to.changeTokenBalances(hardhatToken, [addr1, addr2], [-50, 50]);
     });
 
-    const filter = {
-      address: proxyAddress,
-      topics: [
-        utils.id("Transfer(address,address,uint256)")
-      ]
-    }
-    provider.on(filter, (log, event) => {
-      // Emitted whenever a DAI token transfer occurs
-    })
+    it("should emit Transfer events", async function () {
+      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(
+        deployTokenFixture
+      );
 
-    console.log("callback 返回的数据 : " + txGet.blockHash)
-    console.log("callback 返回的数据 : " + txGet.raw)
+      // Transfer 50 tokens from owner to addr1
+      await expect(hardhatToken.transfer(addr1.address, 50))
+        .to.emit(hardhatToken, "Transfer")
+        .withArgs(owner.address, addr1.address, 50);
 
-    expect(txGet).to.equal(10);
+      // Transfer 50 tokens from addr1 to addr2
+      // We use .connect(signer) to send a transaction from another account
+      await expect(hardhatToken.connect(addr1).transfer(addr2.address, 50))
+        .to.emit(hardhatToken, "Transfer")
+        .withArgs(addr1.address, addr2.address, 50);
+
+    }); */
+
+  it("自己的测试", async function () {
+    const { hardhatToken, owner, addr1, addr2 } = await loadFixture(
+      deployTokenFixture
+    );
+    await expect(hardhatToken.transfer(addr1.address, 50))
+      .to.emit(hardhatToken, "Fuck")
+      .withArgs("nothing");
+
+    /* await expect(owner.sendTransaction({
+      to: hardhatToken.address,
+      data: "0x"  // 0x  调用了 fallback 
+    }))
+      .to.emit(hardhatToken, "Bro")
+      .withArgs("fallback"); */
+
+    // 通过 fallback 调用  Logic 里面的 SetUint256Param
+    await expect(owner.sendTransaction({
+      to: hardhatToken.address,
+      data: "cd4fe8cd0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000"  
+    }))
+      .to.emit(hardhatToken, "Bro")
+      .withArgs("fallback");
+      
   });
+
+  /* it("Should fail if sender doesn't have enough tokens", async function () {
+    const { hardhatToken, owner, addr1 } = await loadFixture(
+      deployTokenFixture
+    );
+    const initialOwnerBalance = await hardhatToken.balanceOf(owner.address);
+
+    // Try to send 1 token from addr1 (0 tokens) to owner (1000 tokens).
+    // `require` will evaluate false and revert the transaction.
+    await expect(
+      hardhatToken.connect(addr1).transfer(owner.address, 1)
+    ).to.be.revertedWith("Not enough tokens");
+
+    // Owner balance shouldn't have changed.
+    expect(await hardhatToken.balanceOf(owner.address)).to.equal(
+      initialOwnerBalance
+    );
+  }); */
 
 });

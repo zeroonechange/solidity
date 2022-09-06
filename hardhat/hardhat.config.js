@@ -7,7 +7,7 @@ const GOERLI_PRIVATE_KEY = "a40f68e080b908bfe99210d483cf5aa53dd2bde380cfba94f3b2
 
 module.exports = {
   solidity: "0.8.9",
-  defaultNetwork: "goerli",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       allowUnlimitedContractSize: true

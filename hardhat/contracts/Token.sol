@@ -72,7 +72,7 @@ contract Token {
         emit Bro("fallback");
         address _impl = implementation;
         console.log("---fallback---  impl: %s ", _impl);
-
+    
         assembly {
             // Copy msg.data. We take full control of memory in this inline assembly
             // block because it will not return to Solidity code. We overwrite the
@@ -100,7 +100,6 @@ contract Token {
                 return(0, returndatasize())
             }
         }
-
     }
 
     function hello() public returns (uint256){
