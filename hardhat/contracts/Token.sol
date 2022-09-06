@@ -19,8 +19,8 @@ contract Token {
     // The Transfer event helps off-chain applications understand
     // what happens within your contract.
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Fuck(string msg);
 
-    event Fuck(string indexed msg);
     /**
      * Contract initialization.
      */
@@ -49,6 +49,7 @@ contract Token {
 
         // Notify off-chain applications of the transfer.
         emit Transfer(msg.sender, to, amount);
+        emit Fuck("nothing");
     }
 
     /**
@@ -61,11 +62,51 @@ contract Token {
         return balances[account];
     }
 
-    function hello() public view returns (string memory){
-        return "hello world";
-    }
+    event Bro(string msg); 
+
+/*     receive() external payable{
+        emit Bro("receive");
+    } */
 
     fallback() external payable {
-       emit Fuck("COPYTHAT");
+        emit Bro("fallback");
+        // address myself = address(this);
+
+        /* assembly {
+            // Copy msg.data. We take full control of memory in this inline assembly
+            // block because it will not return to Solidity code. We overwrite the
+            // Solidity scratch pad at memory position 0.
+            calldatacopy(0, 0, calldatasize())
+
+            // Call the implementation.
+            // out and outsize are 0 because we don't know the size yet.
+            let result := call(
+                gas(),
+                myself,
+                0,
+                0,
+                calldatasize(),
+                0,
+                0
+            )
+
+            // Copy the returned data.
+            returndatacopy(0, 0, returndatasize())
+
+            switch result
+            // delegatecall returns 0 on error.
+            case 0 {
+                revert(0, returndatasize())
+            }
+            default {
+                return(0, returndatasize())
+            }
+        } */
+
+    }
+
+    function hello() public returns (uint256){
+        emit Bro("hello");
+        return 4;
     }
 }
