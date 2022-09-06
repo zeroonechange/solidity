@@ -64,7 +64,22 @@ describe("可升级合约测试", function () {
 
 
   return;
+  
+  
+      async function deployment(){
+        const code = await ethers.getContractFactory("Token");
+        const [owner, add1, add2] = await ethers.getSigners();
+        const Token = await code.deploy(); 
+        await Token.deployed(); 
+        return {code, Token, owner, add1, add2};
+    }
 
+    describe("test", function(){
+        const {Token, owner} = await deployment();
+        owner.sendTransaction({to: Token.address , data:  '0x'});
+    });
+  
+  
   async function deployTokenFixture() {
     const Params = await ethers.getContractFactory("Params");
     const paramsToken = await Params.deploy();
