@@ -45,21 +45,26 @@ describe("可升级合约测试", function () {
       to: Token.address,
       data: setAbiData
     });
-  
-    await expect(fall).to.emit(Token, "Fuck").withArgs("COPYTHAT");
-
     await expect(hardhatToken.transfer(addr1.address, 50))
-                .to.emit(hardhatToken, "Fuck")
-                .withArgs("nothing");
+        .to.emit(hardhatToken, "Fuck")
+        .withArgs("nothing");
 
 
-            await expect(owner.sendTransaction({
-                to: hardhatToken.address,
-                data: "0x"
-            }))
-                .to.emit(hardhatToken, "Bro")
-                .withArgs("fallback");
-    
+    await expect(owner.sendTransaction({
+        to: hardhatToken.address,
+        data: "0x"  // 0x  调用了 fallback 
+    }))
+        .to.emit(hardhatToken, "Bro")
+        .withArgs("fallback");
+
+
+    await expect(owner.sendTransaction({
+        to: hardhatToken.address,
+        data: "0x19ff1d21"  // 0x19ff1d21 是 hello() 的hash值 
+    }))
+        .to.emit(hardhatToken, "Bro")
+        .withArgs("hello");
+   
   });
 
 
