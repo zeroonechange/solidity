@@ -1,5 +1,7 @@
 pragma solidity ^0.8.9;
 
+import "hardhat/console.sol";
+
 
 // This is the main building block for smart contracts.
 contract Token {
@@ -12,6 +14,8 @@ contract Token {
 
     // An address type variable is used to store ethereum accounts.
     address public owner;
+
+    address public implementation;
 
     // A mapping is a key/value map. Here we store each account's balance.
     mapping(address => uint256) balances;
@@ -64,32 +68,26 @@ contract Token {
 
     event Bro(string msg); 
 
-/*     receive() external payable{
-        emit Bro("receive");
-    } */
-
     fallback() external payable {
         emit Bro("fallback");
-        // address myself = address(this);
+        address _impl = implementation;
+        console.log("---fallback---  impl: %s ", _impl);
 
-        /* assembly {
+        assembly {
             // Copy msg.data. We take full control of memory in this inline assembly
             // block because it will not return to Solidity code. We overwrite the
             // Solidity scratch pad at memory position 0.
             calldatacopy(0, 0, calldatasize())
 
-            // Call the implementation.
             // out and outsize are 0 because we don't know the size yet.
-            let result := call(
+            let result := delegatecall(
                 gas(),
-                myself,
-                0,
+                _impl,
                 0,
                 calldatasize(),
                 0,
                 0
             )
-
             // Copy the returned data.
             returndatacopy(0, 0, returndatasize())
 
@@ -101,12 +99,18 @@ contract Token {
             default {
                 return(0, returndatasize())
             }
-        } */
+        }
 
     }
 
     function hello() public returns (uint256){
+        console.log("---hello---");
         emit Bro("hello");
         return 4;
+    }
+
+    function setImpl(address _impl) public {
+        console.log("---setImpl---  impl: %s ", _impl);
+        implementation = _impl;
     }
 }
