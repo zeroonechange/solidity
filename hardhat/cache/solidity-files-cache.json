@@ -158,6 +158,43 @@
       "artifacts": [
         "console"
       ]
+    },
+    "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\Demo.sol": {
+      "lastModificationDate": 1662484193624,
+      "contentHash": "74eff5207fdc3124ee2ed5d0a10de4f1",
+      "sourceName": "contracts/Demo.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Demo"
+      ]
     }
   }
 }

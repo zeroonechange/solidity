@@ -4,7 +4,6 @@ const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 describe("Token contract", function () {
 
   async function deployTokenFixture() {
-
     const [owner, addr1, addr2] = await ethers.getSigners();
 
     const Token = await ethers.getContractFactory("Token");
@@ -77,13 +76,13 @@ describe("Token contract", function () {
     }); */
 
   it("自己的测试", async function () {
-    const { hardhatToken, owner, addr1, addr2 } = await loadFixture(
-      deployTokenFixture
-    );
+
+    const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployTokenFixture);
+
     await expect(hardhatToken.transfer(addr1.address, 50))
       .to.emit(hardhatToken, "Fuck")
       .withArgs("nothing");
-
+      
     /* await expect(owner.sendTransaction({
       to: hardhatToken.address,
       data: "0x"  // 0x  调用了 fallback 
@@ -92,12 +91,12 @@ describe("Token contract", function () {
       .withArgs("fallback"); */
 
     // 通过 fallback 调用  Logic 里面的 SetUint256Param
-    await expect(owner.sendTransaction({
+  /*   await expect(owner.sendTransaction({
       to: hardhatToken.address,
-      data: "cd4fe8cd0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000"  
+      data: "0xcd4fe8cd0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000"  
     }))
       .to.emit(hardhatToken, "Bro")
-      .withArgs("fallback");
+      .withArgs("fallback"); */
       
   });
 
