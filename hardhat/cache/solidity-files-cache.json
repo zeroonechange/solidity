@@ -51,8 +51,8 @@
       ]
     },
     "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\Token.sol": {
-      "lastModificationDate": 1662480751219,
-      "contentHash": "5b1340e0c94066066fc654f42a19f7eb",
+      "lastModificationDate": 1662564557550,
+      "contentHash": "697c71e2a54e6117cd339c6cc26901a6",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -88,8 +88,8 @@
       ]
     },
     "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\Logic.sol": {
-      "lastModificationDate": 1662478959371,
-      "contentHash": "ea5b008a6702c00503755594adadb0f1",
+      "lastModificationDate": 1662564557548,
+      "contentHash": "259a8eda10d558634641b2e93a7d8d51",
       "sourceName": "contracts/Logic.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -194,6 +194,115 @@
       ],
       "artifacts": [
         "Demo"
+      ]
+    },
+    "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\StorageImplementation.sol": {
+      "lastModificationDate": 1662564557549,
+      "contentHash": "c74deb3ad8baaf80aed832d1eb9b9650",
+      "sourceName": "contracts/StorageImplementation.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "StorageImplementation"
+      ]
+    },
+    "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\StorageContract.sol": {
+      "lastModificationDate": 1662564557549,
+      "contentHash": "48d70a912263bea2c00f6794ffc73686",
+      "sourceName": "contracts/StorageContract.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "StorageContract"
+      ]
+    },
+    "E:\\allinweb3\\solidity\\workspace\\solidity\\hardhat\\contracts\\Lock.sol": {
+      "lastModificationDate": 1662565387049,
+      "contentHash": "22c77e5a0b731682482899e51ccd069f",
+      "sourceName": "contracts/Lock.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lock"
       ]
     }
   }
