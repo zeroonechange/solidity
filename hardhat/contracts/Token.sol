@@ -15,7 +15,7 @@ contract Token {
     // An address type variable is used to store ethereum accounts.
     address public owner;
 
-    address public implementation;
+    address private implementation;
 
     // A mapping is a key/value map. Here we store each account's balance.
     mapping(address => uint256) balances;
@@ -68,48 +68,46 @@ contract Token {
 
     event Bro(string msg); 
 
+
     fallback() external payable {
         emit Bro("fallback");
-        address _impl = implementation;
-        console.log("---fallback---  impl: %s ", _impl);
-    
-        assembly {
-            // Copy msg.data. We take full control of memory in this inline assembly
-            // block because it will not return to Solidity code. We overwrite the
-            // Solidity scratch pad at memory position 0.
+        console.log("---fallback---  impl: %s ", implementation);
+        delegate(implementation);
+    }
+
+   function delegate(address a) internal{
+        assembly{
             calldatacopy(0, 0, calldatasize())
 
-            // out and outsize are 0 because we don't know the size yet.
-            let result := delegatecall(
-                gas(),
-                _impl,
-                0,
-                calldatasize(),
-                0,
-                0
-            )
-            // Copy the returned data.
+            let result := delegatecall(gas(), a, 0, calldatasize(), 0, 0)
+
             returndatacopy(0, 0, returndatasize())
 
             switch result
-            // delegatecall returns 0 on error.
-            case 0 {
+            case 0
+            {
                 revert(0, returndatasize())
             }
-            default {
+            default
+            {
                 return(0, returndatasize())
             }
         }
     }
 
-    function hello() public returns (uint256){
+    function test() public returns (uint256){
         console.log("---hello---");
         emit Bro("hello");
         return 4;
     }
 
-    function setImpl(address _impl) public {
-        console.log("---setImpl---  impl: %s ", _impl);
+    function setImplementation(address _impl) external {
+        console.log("---setImpl---  impl: %s   contract address: %s ", _impl, address(this));
         implementation = _impl;
     }
+
+    function getImplementation() public view returns (address){
+        return implementation;
+    }
+
 }
