@@ -21,4 +21,9 @@ contract Logic {
         console.log("---GetUint256Param--- key=%s, value=%s", _key, v);
         return v;
     }
+
+     function hello() public returns (string memory)  {
+        console.log("hello function called");
+        return "hello";
+    }
 }
