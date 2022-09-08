@@ -104,7 +104,7 @@ describe("Token contract", function () {
             }); */
 
 
-            // callback 方式调用的目前的唯一解
+            // fallback 方式调用的目前的唯一解
             it("--final result--", async function () {
                 const { Token, Logic, token, logic, owner, addr1, addr2 } = await loadFixture(deployTokenFixture);
                 await token.setImplementation(logic.address);

@@ -27,3 +27,12 @@ main()
 
 //  npx hardhat node
 //  npx hardhat run --network localhost scripts/deploy.ts
+
+/**
+ * ethers.js + hardhat  能做俩个事情
+ * 1. 测试脚本   部署在本地网络节点  0等待   部署  普通调用  fallback调用方式有点不太一样  
+ * 2. 部署脚本   或者搞一些有意思的实验  可以远程弄到 rinkeby  或者  geroli 上面去  
+ * 
+ * 基本上看这个项目的代码  结合官网doc英文文档 可以弄懂 80%的流程了   感觉功能不够强大  ethers.js 的官网文档写的很拉跨 
+ * 
+ */
