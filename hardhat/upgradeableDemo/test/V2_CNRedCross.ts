@@ -63,31 +63,30 @@ describe("V2_CNRedCross Test", function () {
         await logicV2.deployed();
         console.log("logicV2 contract deployed -> " + logicV2.address)
 
-        await proxyAdmin.upgradeAndCall(proxy.address, logicV2.address, '0x8129fc1c');
-        // await proxyAdmin.upgrade(proxy.address, logicV2.address);
+        // 醍醐灌顶 
+        await proxyAdmin.upgrade(proxy.address, logicV2.address);   // 由于数据是保存在代理合约中，这份数据已经初始化过了，不需要再初始化，所以调用upgrade方法即可
         console.log(" -------------- after  upgradeAndCall -------------- ")
         expect(await proxyAdmin.getProxyImplementation(proxy.address)).to.equal(logicV2.address);
         expect(await proxyAdmin.getProxyAdmin(proxy.address)).to.equal(proxyAdmin.address);
 
         const fallbackProxy = await LogicV2.attach(proxy.address);
-
+        
+        console.log(" -------------- get  old -------------- ")
         // 之前设置了 a=4  GetParam 新代码 返回 a+10 = 14 
         const getResp = await fallbackProxy.GetParam('a');
         expect(getResp).to.emit(proxy, "ParamGetEvent")
             .withArgs('a', 14);
 
-        console.log(" -------------- get  old -------------- ")
-
+       
+        console.log(" -------------- set  new -------------- ")
         // 重新设置 a=1   SetParam 代码没变  
         const setResp = await fallbackProxy.SetParam('a', 1);
         expect(setResp).to.emit(proxy, "ParamSetEvent")
             .withArgs('a', 1);
         // 再次获取 a 的值 应该是  1+10 = 11 
-        console.log(" -------------- set  new -------------- ")
-
+        
+        console.log(" -------------- get  new -------------- ")
         expect(getResp).to.emit(proxy, "ParamGetEvent")
             .withArgs('a', 11);
-
-        console.log(" -------------- get  new -------------- ")
     });
 });
