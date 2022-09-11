@@ -1198,24 +1198,25 @@ contract Logic is Initializable, OwnableUpgradeable {
     {   
         params[_key] = _value;
         emit ParamSetEvent(_key, _value);
-        console.log("contract Logic: SetParam  key=%s, value=%s", _key, _value);
+        console.log("event from contract Logic: SetParam  key=%s, value=%s", _key, _value);
     }
 
     // GET a    4e678e80000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000
     function GetParam(string memory _key)  public virtual returns (uint256) {
         uint256 v = params[_key];
         emit ParamGetEvent(_key, v);
-        console.log("contract Logic: GetParam  key=%s, value=%s", _key, v);
+        console.log("event from contract Logic: GetParam  key=%s, value=%s", _key, v);
         return v;
     }
 }
-
+ 
 contract LogicV2 is Logic{
     
     function GetParam(string memory _key) public virtual override returns (uint256) {
-        uint256 v = params[_key] + 10;
+        uint256 v0 = params[_key];
+        uint256 v = v0 + 10;
         emit ParamGetEvent(_key, v);
-        console.log("contract LogicV2: GetParam  key=%s, value=%s", _key, v);
+        console.log("event from contract LogicV2: GetParam  key=%s, v0=%s, v=%s", _key, v0, v);
         return v;
     }
 }

@@ -44,42 +44,50 @@ describe("V2_CNRedCross Test", function () {
         expect(await proxyAdmin.getProxyAdmin(proxy.address)).to.equal(proxyAdmin.address)
     });
 
-    /* it("call logic via proxy.fallback()", async function () {
+    it("call logic via proxy.fallback()", async function () {
         const { Logic, logic, proxy, proxyAdmin, owner } = await loadFixture(deployTokenFixture);
 
         const fallbackProxy = await Logic.attach(proxy.address);
 
         const setResp = await fallbackProxy.SetParam('a', 4);
-        expect(setResp).to.emit(proxy, "ParamSetEvent")
-            .withArgs('a', 4);
-        const getResp = await proxy.GetParam('a');
-        expect(getResp).to.emit(proxy, "ParamGetEvent")
-            .withArgs('a', 4);
+        expect(setResp).to.emit(proxy, "ParamSetEvent").withArgs('a', 4);
+        const getResp = await fallbackProxy.GetParam('a');
+        expect(getResp).to.emit(proxy, "ParamGetEvent").withArgs('a', 4);
     });
 
-    it("upgrade logic contract", async function () {
+    it("upgrade logic contract and set/get new value", async function () {
         const { Logic, logic, proxy, proxyAdmin, owner } = await loadFixture(deployTokenFixture);
 
         const LogicV2 = await ethers.getContractFactory("LogicV2");
         const logicV2 = await LogicV2.deploy();
         await logicV2.deployed();
+        console.log("logicV2 contract deployed -> " + logicV2.address)
 
-        await proxyAdmin.upgrade(proxy, logicV2)  //upgradeAndCall(proxy.address, logic.address, '0x8129fc1c')
-        expect(await proxyAdmin.getProxyImplementation(proxy).to.equal(logicV2.address));
-        expect(await proxyAdmin.getProxyAdmin(proxy).to.equal(owner.address));
+        await proxyAdmin.upgradeAndCall(proxy.address, logicV2.address, '0x8129fc1c');
+        // await proxyAdmin.upgrade(proxy.address, logicV2.address);
+        console.log(" -------------- after  upgradeAndCall -------------- ")
+        expect(await proxyAdmin.getProxyImplementation(proxy.address)).to.equal(logicV2.address);
+        expect(await proxyAdmin.getProxyAdmin(proxy.address)).to.equal(proxyAdmin.address);
 
         const fallbackProxy = await LogicV2.attach(proxy.address);
 
         // 之前设置了 a=4  GetParam 新代码 返回 a+10 = 14 
-        const getResp = await proxy.GetParam('a');
+        const getResp = await fallbackProxy.GetParam('a');
         expect(getResp).to.emit(proxy, "ParamGetEvent")
             .withArgs('a', 14);
+
+        console.log(" -------------- get  old -------------- ")
+
         // 重新设置 a=1   SetParam 代码没变  
         const setResp = await fallbackProxy.SetParam('a', 1);
         expect(setResp).to.emit(proxy, "ParamSetEvent")
             .withArgs('a', 1);
         // 再次获取 a 的值 应该是  1+10 = 11 
+        console.log(" -------------- set  new -------------- ")
+
         expect(getResp).to.emit(proxy, "ParamGetEvent")
             .withArgs('a', 11);
-    }); */
+
+        console.log(" -------------- get  new -------------- ")
+    });
 });
