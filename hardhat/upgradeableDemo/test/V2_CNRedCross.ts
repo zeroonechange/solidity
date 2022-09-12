@@ -13,6 +13,9 @@ import { ethers } from "hardhat";
  */
 describe("V2_CNRedCross Test", function () {
 
+    const setA4 = '0xef6f2e050000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000';
+    const getA = '0x70e03cb3000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000016100000000000000000000000000000000000000000000000000000000000000';
+
     async function deployTokenFixture() {
         const [owner] = await ethers.getSigners();
         console.log("owner -> " + owner.address)
@@ -47,12 +50,29 @@ describe("V2_CNRedCross Test", function () {
     it("call logic via proxy.fallback()", async function () {
         const { Logic, logic, proxy, proxyAdmin, owner } = await loadFixture(deployTokenFixture);
 
-        const fallbackProxy = await Logic.attach(proxy.address);
+        /*  这种就是相当于构建一个新的合约  
+         const fallbackProxy = await Logic.attach(proxy.address);
+ 
+         const setResp = await fallbackProxy.SetParam('a', 4);
+         expect(setResp).to.emit(proxy, "ParamSetEvent").withArgs('a', 4);
+         const getResp = await fallbackProxy.GetParam('a');
+         expect(getResp).to.emit(proxy, "ParamGetEvent").withArgs('a', 4); */
 
-        const setResp = await fallbackProxy.SetParam('a', 4);
-        expect(setResp).to.emit(proxy, "ParamSetEvent").withArgs('a', 4);
-        const getResp = await fallbackProxy.GetParam('a');
-        expect(getResp).to.emit(proxy, "ParamGetEvent").withArgs('a', 4);
+        // 下面的才是真的 fallback 方式调用 
+        const setOld = await owner.sendTransaction({
+            to: proxy.address,
+            data: setA4
+        });
+        expect(setOld).to.emit(proxy, "ParamSetEvent")
+            .withArgs('a', 4);
+
+        const getOld = await owner.sendTransaction({
+            to: proxy.address,
+            data: getA
+        });
+        expect(getOld).to.emit(proxy, "ParamSetEvent")
+            .withArgs('a', 4);
+
     });
 
     it("upgrade logic contract and set/get new value", async function () {
@@ -68,26 +88,27 @@ describe("V2_CNRedCross Test", function () {
         console.log(" -------------- after  upgradeAndCall -------------- ")
         expect(await proxyAdmin.getProxyImplementation(proxy.address)).to.equal(logicV2.address);
         expect(await proxyAdmin.getProxyAdmin(proxy.address)).to.equal(proxyAdmin.address);
-
-        const fallbackProxy = await LogicV2.attach(proxy.address);
         
-        console.log(" -------------- get  old -------------- ")
-        // 之前设置了 a=4  GetParam 新代码 返回 a+10 = 14 
-        const getResp = await fallbackProxy.GetParam('a');
-        expect(getResp).to.emit(proxy, "ParamGetEvent")
-            .withArgs('a', 14);  // 这里接收不到之前的数据了  a=0   value=10   fallback不行 这种 attach 没用 
-       
-        console.log(" -------------- set  new -------------- ")
-        // 重新设置 a=1   SetParam 代码没变  
-        const setResp = await fallbackProxy.SetParam('a', 1);
-        expect(setResp).to.emit(proxy, "ParamSetEvent")
-            .withArgs('a', 1);
-        // 再次获取 a 的值 应该是  1+10 = 11 
+        /*  const fallbackProxy = await LogicV2.attach(proxy.address);
+         // 之前设置了 a=4  GetParam 新代码 返回 a+10 = 14 
+         const getResp = await fallbackProxy.GetParam('a');
+         expect(getResp).to.emit(proxy, "ParamGetEvent")
+             .withArgs('a', 14);  // 这里接收不到之前的数据了  a=0   value=10   fallback不行 这种 attach 没用 
+         // 重新设置 a=1   SetParam 代码没变  
+         const setResp = await fallbackProxy.SetParam('a', 1);
+         expect(setResp).to.emit(proxy, "ParamSetEvent")
+             .withArgs('a', 1);
+         // 再次获取 a 的值 应该是  1+10 = 11 
+         const getResp2 = await fallbackProxy.GetParam('a');  // 跑的是里面的代码 
+         expect(getResp2).to.emit(proxy, "ParamGetEvent")
+             .withArgs('a', 11);    */
         
-        console.log(" -------------- get  new -------------- ")
-        const getResp2 = await fallbackProxy.GetParam('a');  // 跑的是里面的代码 
-        expect(getResp2).to.emit(proxy, "ParamGetEvent")
-            .withArgs('a', 11);  
-
+        // 真正的fallback 调用方式  
+        const getOld2 = await owner.sendTransaction({
+            to: proxy.address,
+            data: getA
+        });
+        expect(getOld2).to.emit(proxy, "ParamSetEvent")
+            .withArgs('a', 4);
     });
 });
