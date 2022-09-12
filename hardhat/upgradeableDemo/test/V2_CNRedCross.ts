@@ -75,8 +75,7 @@ describe("V2_CNRedCross Test", function () {
         // 之前设置了 a=4  GetParam 新代码 返回 a+10 = 14 
         const getResp = await fallbackProxy.GetParam('a');
         expect(getResp).to.emit(proxy, "ParamGetEvent")
-            .withArgs('a', 14);
-
+            .withArgs('a', 14);  // 这里接收不到之前的数据了  a=0   value=10   fallback不行 这种 attach 没用 
        
         console.log(" -------------- set  new -------------- ")
         // 重新设置 a=1   SetParam 代码没变  
@@ -86,7 +85,9 @@ describe("V2_CNRedCross Test", function () {
         // 再次获取 a 的值 应该是  1+10 = 11 
         
         console.log(" -------------- get  new -------------- ")
-        expect(getResp).to.emit(proxy, "ParamGetEvent")
-            .withArgs('a', 11);
+        const getResp2 = await fallbackProxy.GetParam('a');  // 跑的是里面的代码 
+        expect(getResp2).to.emit(proxy, "ParamGetEvent")
+            .withArgs('a', 11);  
+
     });
 });

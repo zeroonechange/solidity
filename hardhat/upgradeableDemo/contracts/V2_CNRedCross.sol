@@ -1210,7 +1210,7 @@ contract Logic is Initializable, OwnableUpgradeable {
     }
 }
 
-contract LogicV2 is Initializable, OwnableUpgradeable {
+/* contract LogicV2 is Initializable, OwnableUpgradeable {
     
     function initialize() public initializer {
         __Context_init_unchained();
@@ -1239,9 +1239,9 @@ contract LogicV2 is Initializable, OwnableUpgradeable {
         console.log("event from contract LogicV2: GetParam  key=%s, value=%s", _key, v);
         return v;
     }
-}
+} */
 
-/* contract LogicV2 is Logic{
+contract LogicV2 is Logic{
     
     function GetParam(string memory _key) public virtual override returns (uint256) {
         uint256 v0 = params[_key];
@@ -1251,4 +1251,3 @@ contract LogicV2 is Initializable, OwnableUpgradeable {
         return v;
     }
 }
- */
