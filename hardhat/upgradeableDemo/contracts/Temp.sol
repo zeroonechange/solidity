@@ -1257,6 +1257,7 @@ abstract contract ERC1967UpgradeUpgradeable is Initializable {
 }
 
 abstract contract UUPSUpgradeable is Initializable, IERC1822ProxiableUpgradeable, ERC1967UpgradeUpgradeable {
+
     function __UUPSUpgradeable_init() internal onlyInitializing {
     }
 
@@ -1379,6 +1380,12 @@ contract MyLogicV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 }
  
 
+// 用 openzeppelin contract wizard 去创建一个 UUPS 的合约 
+// 再用remix去部署  部署的时候有俩个选择  
+//              1.deploy with proxy    会先创建 implementation V1  再创建 ERC1967 proxy 
+//              2.upgrade with proxy   会先创建 new implementation V2  再用 proxy 去 upgrade  至此就完成了升级 
+//   在 remix 面板上可以看到  proxy 和 implementation 有相同的方法函数  implementation 只是存放逻辑 没数据   而 proxy 才是真正的调用入口
+//   先把比之前 V2 版本的 可升级合约  这里没了 adminProxy 用于管理 proxy 例如升级之类的 
 contract MyLogicV2 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     function initialize() initializer public {
       __Ownable_init();
