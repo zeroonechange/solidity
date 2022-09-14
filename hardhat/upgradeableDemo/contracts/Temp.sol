@@ -1,4 +1,4 @@
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.9;
 
 library StorageSlot {
     struct AddressSlot {
@@ -1387,6 +1387,7 @@ contract MyLogicV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 //   在 remix 面板上可以看到  proxy 和 implementation 有相同的方法函数  implementation 只是存放逻辑 没数据   而 proxy 才是真正的调用入口
 //   先把比之前 V2 版本的 可升级合约  这里没了 adminProxy 用于管理 proxy 例如升级之类的 
 contract MyLogicV2 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
+
     function initialize() initializer public {
       __Ownable_init();
       __UUPSUpgradeable_init();
@@ -1407,9 +1408,112 @@ contract MyLogicV2 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
  
     function GetLogic(string memory _key) public view returns (uint256){
-        return logic[_key]+100;
+        return logic[_key] + 100;
     }
 } 
 
 
 /****************************************** 上面都是逻辑合约  *****************************************************/
+
+
+/**  
+-----------------------------------------------
+Proxy
+	_delegate(address implementation) 
+	_implementation()
+	_fallback()
+	fallback()
+	receive()
+	
+
+ERC1967Upgrade
+	_ROLLBACK_SLOT
+	
+	_IMPLEMENTATION_SLOT
+	_getImplementation()
+	_setImplementation(address newImplementation)
+	_upgradeTo(address newImplementation)
+	_upgradeToAndCall(newImplementation, data)
+	_upgradeToAndCallUUPS(newImplementation, data)
+	
+	_ADMIN_SLOT
+	_getAdmin()
+	_setAdmin(address newAdmin)
+	_changeAdmin(address newAdmin)
+	
+	_BEACON_SLOT
+	_getBeacon()
+	_setBeacon(address newBeacon)
+	_upgradeBeaconToAndCall(newBeacon, data)
+	
+
+ERC1967Proxy is Proxy, ERC1967Upgrade
+	constructor(address _logic, bytes memory _data) ->  _upgradeToAndCall(_logic, _data);
+	_implementation()
+
+ERC1967UpgradeUpgradeable 和 ERC1967Upgrade 的区别几乎差不多 
+
+-----------------------------------------------
+
+Initializable
+	_initialized
+	_initializing
+	modifier initializer()
+	modifier reinitializer(uint8 version)
+	modifier onlyInitializing() 
+	function _disableInitializers()
+
+
+IERC1822ProxiableUpgradeable
+	proxiableUUID()
+	
+	
+ERC1967UpgradeUpgradeable is Initializable
+	_IMPLEMENTATION_SLOT
+	_getImplementation()
+	_setImplementation(address newImplementation)
+	_upgradeTo(address newImplementation)
+	_upgradeToAndCall(newImplementation, data)
+	_upgradeToAndCallUUPS(newImplementation, data)
+	
+	_ADMIN_SLOT
+	_getAdmin()
+	_setAdmin(address newAdmin) 
+	_changeAdmin(address newAdmin)
+	
+	_BEACON_SLOT
+	_getBeacon() 
+	_setBeacon(address newBeacon)
+	_upgradeBeaconToAndCall(newBeacon, data)
+	_functionDelegateCall(address target, bytes memory data) 
+
+
+UUPSUpgradeable is Initializable, IERC1822ProxiableUpgradeable, ERC1967UpgradeUpgradeable 
+	modifier onlyProxy()
+	modifier notDelegated()
+	proxiableUUID()
+	upgradeTo(address newImplementation)
+	upgradeToAndCall(address newImplementation, bytes memory data)
+	
+
+MyLogicV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable 
+	initialize()
+	_authorizeUpgrade(address)
+
+
+UUPS 模式下 	
+	ERC1967UpgradeUpgradeable 很重要  里面俩个 storage slot 一个用来存放 implementation  一个存放 admin
+							  还有个 beacon slot 如果是 fallback 形式的  和 logic slot 是相反的用法 
+							  里面所有的方法都是私有  提供给子类使用 
+	UUPSUpgradeable 是具体的实现  主要是升级方法   没有 admin 和 beacon 相关的方法  可以自己定义的 看需求 
+	
+	ERC1967Proxy 继承 Proxy 和 ERC1967Upgrade  
+		proxy 就是 fallback 去调用逻辑方法   而 ERC1967Upgrade 几乎和 ERC1967UpgradeUpgradeable 一样
+		这个 UUPS 封装了 这个合约集成了三个功能  proxy  admin  logic   牛逼 
+	
+	实际部署时 在remix上部署时 remix做了一下处理 所以 logic 和 proxy 看起来函数是完全一样的  
+			   hardhat 也有专门的插件来做这个事情  蟹不肉  终于搞明白了
+	
+Logic contract address: Holds the address of the logic contract that this proxy delegates to. SHOULD be empty if a beacon is used instead.
+Beacon contract address: Holds the address of the beacon contract this proxy relies on (fallback). SHOULD be empty if a logic address is used directly instead, and should only be considered if the logic contract slot is empty.  
+ */
