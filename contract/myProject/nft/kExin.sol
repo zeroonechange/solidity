@@ -55,8 +55,23 @@ contract KExin is ERC721, ERC721Enumerable, ERC721URIStorage {
 }
 
 /**
+ * 
 
-简单来说
+------------------------------------------------------------------------------------------------------------------------
+
+更新于 2022/9/16 00:31
+那个 metadata 里面存放的是 一些资源信息  是个json文件  例如图片网址 描述 之类的 
+那个 tokenURI 是干啥的 比如 你的 baseTokenUrl = http://<test_domain>/api/token/  
+那么 tokenURI(tokenId)  访问的就是 http://<test_domain>/api/token/tokenId  这就是个 json 文件  里面包含 matadata 信息  
+这么做的好处是什么?  为了上架 opensea 
+    上架的原理和流程:  登录后进入 opensea  链接钱包 然后输入已部署的合约地址  
+        随便找个 藏品 右上角点击 sell  输入一些参数  开始上架   需要初始化钱包 这里其实是 再创建一个 proxy 合约的过程 
+        然后 授权 这些资产的售卖 就是 approval 方法  参考 ERC721 协议  签名后完成了上架  
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+简单来说                                    更新于 2022/9/15 14:00
     1.在 Open Zeppelin 生成合约
     2.在 Alchemy 上创建APP  把 API KEY , HTTPS 复制  去metamask 创建 一个网络  Name 随便 RPC URL 就是 https  Chain ID是5  Currency Symbol 是 ETH 
     3.remix 连接此网络  deploy 合约 
@@ -85,5 +100,5 @@ ipfs://QmW3xKzepserVewHFFfCY2ifogiiEzDPvtPEsPmVC97x5M
 
 all comes from: https://betterprogramming.pub/how-to-create-your-own-nft-smart-contract-tutorial-1b90978bd7a3
 
-
+------------------------------------------------------------------------------------------------------------------------
 */
