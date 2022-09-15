@@ -59,6 +59,10 @@ contract KExin is ERC721, ERC721Enumerable, ERC721URIStorage {
 
 ------------------------------------------------------------------------------------------------------------------------
 
+下一步该去了解 IPFS 怎么使用 
+
+
+
 更新于 2022/9/16 00:31
 那个 metadata 里面存放的是 一些资源信息  是个json文件  例如图片网址 描述 之类的 
 那个 tokenURI 是干啥的 比如 你的 baseTokenUrl = http://<test_domain>/api/token/  
@@ -68,6 +72,10 @@ contract KExin is ERC721, ERC721Enumerable, ERC721URIStorage {
         随便找个 藏品 右上角点击 sell  输入一些参数  开始上架   需要初始化钱包 这里其实是 再创建一个 proxy 合约的过程 
         然后 授权 这些资产的售卖 就是 approval 方法  参考 ERC721 协议  签名后完成了上架  
 
+参考 : 
+    https://zhuanlan.zhihu.com/p/516188462
+    https://github.com/PatrickAlphaC/dungeons-and-dragons-nft
+    https://github.com/PatrickAlphaC/nft-mix 
 ------------------------------------------------------------------------------------------------------------------------
 
 
