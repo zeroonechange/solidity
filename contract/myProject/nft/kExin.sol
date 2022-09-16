@@ -80,9 +80,15 @@ contract KExin is ERC721, ERC721Enumerable, ERC721URIStorage {
         放到github里面  能不能访问呢  不然的话  怎么整  tokenId 是个 uint256 
         like: http://<test_domain>/api/token/1  -> 返回 json 
 
+    https://raw.githubusercontent.com/zeroonechange/solidity/main/contract/myProject/nft/ifps/1
+    那么 baseUrl -> https://raw.githubusercontent.com/zeroonechange/solidity/main/contract/myProject/nft/ifps/ 
+    部署试试看 
 
+    tokenId=1  uri = https://raw.githubusercontent.com/zeroonechange/solidity/main/contract/myProject/nft/ifps/1
 
+    发行成功  https://testnets.opensea.io/assets/goerli/0xe374242f1b835aa3d15d482f43b195c0cf82eced/1
 
+    后面多拍几张科兴的图  然后ps 处理下  再发到 BSC 上  上架 opensea  
 
 
 
