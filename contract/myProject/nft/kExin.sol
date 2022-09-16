@@ -59,7 +59,30 @@ contract KExin is ERC721, ERC721Enumerable, ERC721URIStorage {
 
 ------------------------------------------------------------------------------------------------------------------------
 
-下一步该去了解 IPFS 怎么使用 
+更新于 
+    下一步该去了解 IPFS 怎么使用 
+先把图片上传了  拿到url 
+为每张图片生成一个json文件  再把json文件上传了  拿到一个url  这个url 就是 tokenuri 
+实操
+    图片上传
+        可以弄到 github google drive aws  这些都是中心化的  不是去中心化的 容易被更改 如果服务器宕机了 数据没了
+        IPFS服务器 永远存在 不会被修改  建议去 https://www.pinata.cloud/   1G 是免费的  
+        上传的是folder  里面是 a.png b.png ... 
+        folder 的 CID 是  Qmdv57DAE94x79TpgqW2Ui6fBB9FL9taga6kYQX7wtaeu3 
+        ipfs://Qmdv57DAE94x79TpgqW2Ui6fBB9FL9taga6kYQX7wtaeu3  
+        pinata 提供的访问uri
+            https://gateway.pinata.cloud/ipfs/Qmdv57DAE94x79TpgqW2Ui6fBB9FL9taga6kYQX7wtaeu3
+            https://gateway.pinata.cloud/ipfs/Qmdv57DAE94x79TpgqW2Ui6fBB9FL9taga6kYQX7wtaeu3/a.png
+        统一标准下的url 
+            https://ipfs.io/ipfs/Qmdv57DAE94x79TpgqW2Ui6fBB9FL9taga6kYQX7wtaeu3/a.png
+
+    为图片生成 json 文件
+        放到github里面  能不能访问呢  不然的话  怎么整  tokenId 是个 uint256 
+        like: http://<test_domain>/api/token/1  -> 返回 json 
+
+
+
+
 
 
 

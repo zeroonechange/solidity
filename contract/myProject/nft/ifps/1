@@ -1,0 +1,15 @@
+{
+    "name": "kexin bg",
+    "description": "background of kexin industry ",
+    "image": "https://gateway.pinata.cloud/ipfs/Qmdv57DAE94x79TpgqW2Ui6fBB9FL9taga6kYQX7wtaeu3/a.png",
+    "attributes": [
+        {
+            "trait_type": "where",
+            "value": "gate"
+        },
+        {
+            "trait_type": "time",
+            "value": "2022-09-12"
+        }
+    ]
+}
