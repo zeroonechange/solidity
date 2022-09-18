@@ -49,8 +49,8 @@ contract KEXin is ERC721, ERC721Burnable, Ownable {
 	baseURI: ipfs://QmUuS2crfcMRfHTj6eFfmMHyLsoJy5r6cCDeBjdF8QKJQw/ 
 	
 	common 账号  环境 Goerli Test Network 
-	合约地址:  0x808ae3F11400f7E4Fc8B6F3D4BA6716feFc2b5ae    privacy key: a40f68e080b908bfe99210d483cf5aa53dd2bde380cfba94f3b2de4149e2a562
-	owner： 0x5D9C8273bce3F1fe86C55c4D0fD4844636279393
+	合约地址:  0x808ae3F11400f7E4Fc8B6F3D4BA6716feFc2b5ae    
+	owner： 0x5D9C8273bce3F1fe86C55c4D0fD4844636279393     privacy key: a40f68e080b908bfe99210d483cf5aa53dd2bde380cfba94f3b2de4149e2a562
 	saftmint 一个后  得到 tokenURI  -> ipfs://QmUuS2crfcMRfHTj6eFfmMHyLsoJy5r6cCDeBjdF8QKJQw/0
 	https://ipfs.io/ipfs/QmUuS2crfcMRfHTj6eFfmMHyLsoJy5r6cCDeBjdF8QKJQw/0
 		{"image":"ipfs://QmUQgKka8EW7exiUHnMwZ4UoXA11wV7NFjHAogVAbasSYy","attributes":[{"trait_type":"Earring","value":"Silver Hoop"},{"trait_type":"Background","value":"Orange"},{"trait_type":"Fur","value":"Robot"},{"trait_type":"Clothes","value":"Striped Tee"},{"trait_type":"Mouth","value":"Discomfort"},{"trait_type":"Eyes","value":"X Eyes"}]}
@@ -61,6 +61,9 @@ contract KEXin is ERC721, ERC721Burnable, Ownable {
     接下来就是上架了  
 
 
+5.BSC 上架后  opensea 上没有  
+    合约地址  0xE3Ef5F09181843316724c8C562fD075f506F03F2
+    owner： 0x5D9C8273bce3F1fe86C55c4D0fD4844636279393     privacy key: a40f68e080b908bfe99210d483cf5aa53dd2bde380cfba94f3b2de4149e2a562
 
 
 
@@ -140,12 +143,16 @@ contract KEXin is ERC721, ERC721Burnable, Ownable {
 
 	
 以太坊 从 poW 向 poS merge   见证历史	
+
 	after the merge 
-	0.000092766000803972 Ether ($0.00)   0.13 USD 
+	0.000092766000803972 Ether ($0.13)   0.13 USD 
 
 	before the merge 
-	0.00048766250234078 Ether  ($0.00)	 0.69 USD
+	0.00048766250234078 Ether  ($0.69)	 0.69 USD
 	
 	降低了 81%的 gas 费 
+
+    那么 bsc 呢?   还不如 eth 主链呢 
+    0.000738528 BNB ($0.20) 
 
  */
