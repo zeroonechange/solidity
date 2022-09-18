@@ -155,4 +155,10 @@ contract KEXin is ERC721, ERC721Burnable, Ownable {
     那么 bsc 呢?   还不如 eth 主链呢 
     0.000738528 BNB ($0.20) 
 
+    出块速度12s  比之前快了1s  
+    TPS 没有变  layer-2 还是吃香的 
+    炒作的新币 ETHW   ETF  可以了解下 
+    twitter 信息来源挺快的  
+    
+
  */
