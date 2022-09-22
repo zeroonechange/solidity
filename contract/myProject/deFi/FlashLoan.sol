@@ -1,7 +1,27 @@
 
 
 /**
- * 
+ 
+
+
+so
+	MarkerDao 就是一个 Dai的组织  超额抵押稳定币
+	AAVE 是用来借贷的，支付利息
+	Curve 各种稳定币交换  滑点很低  优质项目
+	uniswap 和 curve 类似  AMM 自动做市商 货币兑换  算法不一样 
+	
+	Aave is a decentralized non-custodial liquidity protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.
+	Curve is DeFi's leading AMM, (Automated Market Maker).  Hundreds of liquidity pools have been launched through Curve's factory and incentivized by Curve's DAO.  Users rely on Curve's proprietary formulas to provide high liquidity, low slippage, low fee transactions among ERC-20 tokens.
+	
+	简单理解  AAVE是个借贷平台 P2P  里面是个流动池   	去中心化借贷平台
+			  Curve是个自动做市商的平台 货币交换 尤其是稳定币 高流动性 滑点低  去中心化交易所
+	
+	MarkerDao 搞出来的 DAI 是超额抵押 所以几乎没啥风险  1:1 对标美元
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
  * 今天看了一些比较有名的deFi项目  例如 dai - makerDao  稳定币 拿东西抵押的  比luna算法稳定币要稳定的多 
  * 还有就是  aave  这种 流动池 做p2p贷款  还有闪电贷  这种很新型的思想 
  * curve 目前还在了解 比较复杂里面各种pool  
