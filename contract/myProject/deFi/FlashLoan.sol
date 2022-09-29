@@ -1,8 +1,29 @@
 
 
 /**
- 
 
+
+
+------------------------------------------------------------------------------------------------------------------
+polygon   Arbitrum   Chainlist
+
+Layer-2 Arbitrum 玩法
+        1.先在 Rinkeby testnet 领取币  
+        2.添加测试网络 Arbitrum Rinkeby. ChainID=421611  https://chainlist.org/
+        3.用 bridge桥从 Rinkeby 转到 Arbitrum Rinkeby 要等2分钟才会ok  https://bridge.arbitrum.io/
+        4.用remix 部署合约  挺快的  0.36刀  gas费不便宜   还是 polygon 香
+
+
+polygon玩法 
+        1.去 https://chainlist.org/  找到测试网 Mumbai  Chain ID=90001  添加到钱包 
+        2.领取测试币  https://faucet.polygon.technology/ 
+        3.remix 部署   完了上区块链浏览器  https://mumbai.polygonscan.com/ 
+        在 polygon 上部署合约  0.01刀   在ETH上 0.69刀  holy shit bro 
+
+        参考: https://blog.polysynth.com/how-to-connect-polygon-testnet-to-metamask-wallet-472bca410d64
+
+
+------------------------------------------------------------------------------------------------------------------
 
 so
 	MarkerDao 就是一个 Dai的组织  超额抵押稳定币
