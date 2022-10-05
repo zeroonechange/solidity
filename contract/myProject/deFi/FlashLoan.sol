@@ -4,6 +4,68 @@
 
 ------------------------------------------------------------------------------------------------------------------
 
+
+波卡  Polkdadot -	https://www.youtube.com/watch?v=UzPncwdb8Cw
+		以太坊三大创始人    10w处理速度  gas费低   跨链 
+		DOT币 投票 质押 
+		
+
+公链  	Solana Cardano Polkdadot Terra Luna	https://www.youtube.com/watch?v=Q5w138L5joI
+		
+
+USDT USDC BUSD TUSD DAI 稳定币对比  https://www.youtube.com/watch?v=p3WmjEitOus
+
+USDT 由来 	https://www.youtube.com/watch?v=WZbBw9B0TEE
+
+Money flow in crypto:        巨鲸操作路线 
+	Fiat ->  btc -> large市值 ->  middle市值 ->  low市值 ->  btc  ->  Fiat 
+
+The Graph - GRT   提供API的  和 chainlink类似   把 链上数据返回给客户   https://www.youtube.com/watch?v=pymmpTSbrdM
+
+sushiswap  不贪心 挖矿  更新速度快 经济模型优于uniswap	https://www.youtube.com/watch?v=uNa8yCWVOLo
+		
+
+Uniswap	 
+		AMM , impermanent loss , unisocks , unipigs , flashswap 
+		flash swap 智能合约交互 
+			不要抵押 - 借钱必还 - 
+
+AAVE	1.P2P借贷  deposit / borrow  
+		2.staking  
+		3.govereance
+		4.Flashloan  - 不需要collateral抵押物 - 无上限 - 以太坊机制-失败回滚 - 合约才能玩
+		5.credit delegation  把自己的信用贷出去   合约才能玩
+		
+		v2版本 https://www.youtube.com/watch?v=kC90ZZyb6Uo
+			不会被清算  把债务变成稳定币
+			flash loan 升级   batch flash loans
+			借钱给token  debt tokenization  次贷危机 CDS
+			native credit delegation 
+			gas optimization
+			audit by MixBytes, Certik, ConsenSys Diligence, PeckShield, Sigma Prime
+			
+defi pulse	https://www.defipulse.com/
+Infura   做service  暴露API接口  dapp 去拿区块链上的数据信息   因为全节点太大了
+吴忌寒   比特大陆   矿工头子   BCH =  一个网红 + 一个矿工    https://coin.dance/
+Axion   上线10分钟被增发代币 卖出导致币价归零 audited by Hacken and Certik 
+PoolTogether   代码是经过审计的  大资金套利 
+万向区块链实验室   国内前沿
+Brave Browser  没广告  赚收益  js创始人 
+
+安全 
+	跨链Poly 6.1 亿美金  https://www.youtube.com/watch?v=RNoln_gh-sg +   https://www.theblockbeats.info/news/25871
+	攻击例子  https://rekt.news/leaderboard/   +  https://www.youtube.com/watch?v=2RPIDsBoVAU + https://www.youtube.com/watch?v=rfvhWG3F_Zk
+	机器人  https://www.youtube.com/watch?v=vz_7VGw4r5Y
+	Flashloan 通过套利盗取 Harvest Finance 24M 资产  https://www.youtube.com/watch?v=IFTXa0d_hdo
+	酸黄瓜 被黑客攻击。2000w美金被盗    https://www.youtube.com/watch?v=xXIgv-Hvf2g
+	Compound 异常清算始末 预言机被攻击   https://www.youtube.com/watch?v=pvbaMRlr0IE
+骗局 Filecoin 国人项目  https://www.youtube.com/watch?v=UA9YfaKv_6U
+	 常见骗局   https://www.youtube.com/watch?v=YZJVOX3ullI
+	 plustoken  https://www.theblockbeats.info/news/20950?search=1	 
+
+
+------------------------------------------------------------------------------------------------------------------
+
 Im back.  3 days 
 
 
