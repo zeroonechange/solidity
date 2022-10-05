@@ -5,14 +5,53 @@
 ------------------------------------------------------------------------------------------------------------------
 
 
+暴雷 	三箭资本   celsius  luna network  
+
+gameFi - myria	  https://www.youtube.com/watch?v=EM0UarVAvAY
+
+Aptos  新的公链   160K tps  https://www.youtube.com/watch?v=-EaSiFAaDn8
+
+gameFi崩盘 	cryptomines-eternal   https://www.youtube.com/watch?v=ycs3jFxwhcI
+
+people  庄家拉盘 160X   https://www.youtube.com/watch?v=n3t8RAj2-ZU
+
+Olympus  代币一飞冲天  社区 共识 CS资金盘   提供LP  金库60亿 增发300亿  大家都不卖  APY=8778% 
+		 所有人不卖  都在 stake  囚徒困境   stake bond sell  大家选择stake  收益都高 博弈 
+		 https://www.theblockbeats.info/news/28998
+		 太变态了 要研究下它的经济模型  
+
+黑话  GN-Good night  GM-Good morning   Ser-sir  Fren-friend  GMI/WAGMI-gonna make it/we all gonna make it   NGMI/not going make it
+	  LL-larvalabs   AB-ArtBlocks   PFP-profile picture   Looks rare-used ironically 
+	  FOMO-fear of missing out   cope-the opposite of FOMO  佛系  
+	  IRL-in real life    Szn-season    probably nothing-probably something    up only-never down 
+	  hen-nft    OG-original gangster   LFT-lets fucking go   Few-few understand    
+	  Derivatives-金融衍生品   noob/pleb-newbie and  plebian 	 
+
+Layer2 Arbitrum  乐观rollup  scaling  -  https://www.youtube.com/watch?v=lA3BvHHKI20
+
+Element finance - defi's fixed rate protocol -  把未来的利息变成token卖出去   本金+利息 
+
+Hop Protocol  L1 L2 slidechain 转token 工具-桥   直接从L2转到Polygon 非常叼   https://www.youtube.com/watch?v=fRuIL3rSCcQ
+
+Avalanche  AVAX  
+
+Synthetix	金融衍生品  组合资产和现实挂钩   https://synthetix.io/		
+
+Terra-Luna    韩国人 比波卡要强  
+			anchor protocol  Terra-UST     算法稳定币 
+			TVL 36亿 3.6B   APY=19.45%   BORROW APR=26.64% 
+			
+			https://www.youtube.com/watch?v=81XlLzYOvb8		https://www.youtube.com/watch?v=Yv8lAXSETdo						
+
 波卡  Polkdadot -	https://www.youtube.com/watch?v=UzPncwdb8Cw
 		以太坊三大创始人    10w处理速度  gas费低   跨链 
-		DOT币 投票 质押 
-		
+		DOT币 投票 质押  
+		parachain  bridges   nominators  validators   collators   fishermen 
+		底层由rust写的    multi parallelized transactions
+		概念超多  复杂 
 
 公链  	Solana Cardano Polkdadot Terra Luna	https://www.youtube.com/watch?v=Q5w138L5joI
 		
-
 USDT USDC BUSD TUSD DAI 稳定币对比  https://www.youtube.com/watch?v=p3WmjEitOus
 
 USDT 由来 	https://www.youtube.com/watch?v=WZbBw9B0TEE
@@ -24,7 +63,6 @@ The Graph - GRT   提供API的  和 chainlink类似   把 链上数据返回给�
 
 sushiswap  不贪心 挖矿  更新速度快 经济模型优于uniswap	https://www.youtube.com/watch?v=uNa8yCWVOLo
 		
-
 Uniswap	 
 		AMM , impermanent loss , unisocks , unipigs , flashswap 
 		flash swap 智能合约交互 
@@ -53,6 +91,8 @@ PoolTogether   代码是经过审计的  大资金套利
 Brave Browser  没广告  赚收益  js创始人 
 
 安全 
+	
+	QBridge被黑  8000万美元  https://www.theblockbeats.info/news/28993?search=1
 	跨链Poly 6.1 亿美金  https://www.youtube.com/watch?v=RNoln_gh-sg +   https://www.theblockbeats.info/news/25871
 	攻击例子  https://rekt.news/leaderboard/   +  https://www.youtube.com/watch?v=2RPIDsBoVAU + https://www.youtube.com/watch?v=rfvhWG3F_Zk
 	机器人  https://www.youtube.com/watch?v=vz_7VGw4r5Y
