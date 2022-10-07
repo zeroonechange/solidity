@@ -4,6 +4,7 @@
 
 ------------------------------------------------------------------------------------------------------------------
 
+公链   Ethereum  Cosmos  Solana  Aptos  Sui  Celestia  Polkadot  Polygon  Avalanche 
 
 暴雷 	三箭资本   celsius  luna network  
 
