@@ -4,7 +4,8 @@
 
 ------------------------------------------------------------------------------------------------------------------
 
-公链   Ethereum  Cosmos  Solana  Aptos  Sui  Celestia  Polkadot  Polygon  Avalanche 
+公链   Ethereum  Cosmos Solana  Aptos  Sui  Celestia  Polkadot  Polygon  Avalanche 
+		https://members.delphidigital.io/reports/finding-a-home-for-labs
 
 暴雷 	三箭资本   celsius  luna network  
 
@@ -92,7 +93,7 @@ PoolTogether   代码是经过审计的  大资金套利
 Brave Browser  没广告  赚收益  js创始人 
 
 安全 
-	
+	BNB公链攻击    https://www.theblockbeats.info/news/32030
 	QBridge被黑  8000万美元  https://www.theblockbeats.info/news/28993?search=1
 	跨链Poly 6.1 亿美金  https://www.youtube.com/watch?v=RNoln_gh-sg +   https://www.theblockbeats.info/news/25871
 	攻击例子  https://rekt.news/leaderboard/   +  https://www.youtube.com/watch?v=2RPIDsBoVAU + https://www.youtube.com/watch?v=rfvhWG3F_Zk
