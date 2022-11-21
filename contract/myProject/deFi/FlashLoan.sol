@@ -2,6 +2,49 @@
 
 /**
 
+10/8 
+	1.solcurity 知识概念  enhance 
+	2.找生僻词汇  finding a home for labs
+	3.Alchemy web3 learning challenges 
+
+函数
+	抢跑机器人  需要很高配置的硬件  模拟主网交易的节点eth2    SWC-114
+			   监听所有pending交易  记录交易的账户状态  在自己的节点上 eth2 上模拟交易 看交易后净资产是否增加  
+			   用机器人发出相同但gasPrice更高的交易 进行抢跑     打个时间差 
+			   和之前一个白帽发现了一个bug一样 1200个eth 用的暗池  完成bug修复 并转移财产 
+			   eth 黑暗森林  韭菜兄弟那的视频有说过  
+	insufficient gas griefing 攻击方法？		SWC-126
+	
+
+
+变量
+	修饰符
+		pure - for functions: Disallows modification or access of state.
+		view - for functions: Disallows modification of state.
+		payable - for functions: Allows them to receive Ether together with a call.
+
+		constant - for state variables: Disallows assignment (except initialisation), does not occupy storage slot.
+		immutable - for state variables: Allows exactly one assignment at construction time and is constant afterwards. Is stored in code.
+
+		anonymous - for events: Does not store event signature as topic.
+		indexed - for event parameters: Stores the parameter as topic.
+
+		virtual - for functions and modifiers: Allows the function’s or modifier’s behaviour to be changed in derived contracts.
+		override - States that this function, modifier or public state variable changes the behaviour of a function or modifier in a base contract.
+
+	存储变量打包到一个slot  除非和其他变量一起打包 否则使用完整的256位类型  不要想节省gas  安全 No.1
+	如果单独的 uint24  为啥不能   攻击方法？
+
+
+注释  natspec 标准记录 
+	/// @title A simulator for trees
+	/// @author Larry A. Gardner
+	/// @notice You can use this contract for only the most basic simulation
+	/// @dev All function calls are currently implemented without side effects
+	/// @param rings The number of rings from dendrochronological sample
+	/// @return Age in years, rounded up for partial years
+	/// @custom experimental This is an experimental contract.
+
 ------------------------------------------------------------------------------------------------------------------
 
 公链   Ethereum  Cosmos Solana  Aptos  Sui  Celestia  Polkadot  Polygon  Avalanche 
