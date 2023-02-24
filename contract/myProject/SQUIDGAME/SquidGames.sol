@@ -639,12 +639,9 @@ contract Ownable is Initializable, Context {
     }
 
     function __Ownable_init_unchained() internal initializer {
-
-
         address msgSender = _msgSender();
         _owner = msgSender;
         emit OwnershipTransferred(address(0), msgSender);
-
     }
 
 
@@ -1015,6 +1012,7 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint amountA, uint amountB, uint liquidity);
+
     function addLiquidityETH(
         address token,
         uint amountTokenDesired,
@@ -1023,6 +1021,7 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external payable returns (uint amountToken, uint amountETH, uint liquidity);
+
     function removeLiquidity(
         address tokenA,
         address tokenB,
@@ -1032,6 +1031,7 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint amountA, uint amountB);
+
     function removeLiquidityETH(
         address token,
         uint liquidity,
@@ -1040,6 +1040,7 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint amountToken, uint amountETH);
+
     function removeLiquidityWithPermit(
         address tokenA,
         address tokenB,
@@ -1050,6 +1051,7 @@ interface IUniswapV2Router01 {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external returns (uint amountA, uint amountB);
+
     function removeLiquidityETHWithPermit(
         address token,
         uint liquidity,
@@ -1059,6 +1061,7 @@ interface IUniswapV2Router01 {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external returns (uint amountToken, uint amountETH);
+
     function swapExactTokensForTokens(
         uint amountIn,
         uint amountOutMin,
@@ -1066,6 +1069,7 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint[] memory amounts);
+
     function swapTokensForExactTokens(
         uint amountOut,
         uint amountInMax,
@@ -1073,16 +1077,20 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint[] memory amounts);
+
     function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         payable
         returns (uint[] memory amounts);
+
     function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
         external
         returns (uint[] memory amounts);
+
     function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         returns (uint[] memory amounts);
+
     function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
         external
         payable
@@ -1128,6 +1136,7 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint amountETH);
+
     function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
@@ -1145,12 +1154,14 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
         address to,
         uint deadline
     ) external;
+
     function swapExactETHForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
         address to,
         uint deadline
     ) external payable;
+
     function swapExactTokensForETHSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
@@ -1177,10 +1188,16 @@ contract SQUIDToken is ERC20, Ownable {
         _totalSupply = 0;
         
         _mint(msg.sender, INITIAL_TOTAL_SUPPLY);
-        
+        // 是一对一对的创建 还是只需要加入一个      router  factory  pair 的区别是什么? 
         uniswapV2Router = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
         
          // Create a uniswap pair for this new token
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
     }
 }
+
+/**
+
+
+ 
+ */
