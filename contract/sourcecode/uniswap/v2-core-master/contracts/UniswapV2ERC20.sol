@@ -78,6 +78,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
         return true;
     }
 
+    // 
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
         require(deadline >= block.timestamp, 'UniswapV2: EXPIRED');
         bytes32 digest = keccak256(

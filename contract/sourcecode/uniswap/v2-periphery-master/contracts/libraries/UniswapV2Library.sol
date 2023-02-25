@@ -1,7 +1,6 @@
 pragma solidity >=0.5.0;
 
-import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
-
+import './../interfaces/IUniswapV2Pair.sol';
 import "./SafeMath.sol";
 
 library UniswapV2Library {
@@ -15,12 +14,18 @@ library UniswapV2Library {
     }
 
     // calculates the CREATE2 address for a pair without making any external calls
+    /**
+     * 工厂地址  AB地址  获取 pair地址   因为用了 CREATE2  加了盐  和 nounce没关系  所以 地址是确定的  可以算出来  
+     * @param factory 
+     * @param tokenA 
+     * @param tokenB 
+     */
     function pairFor(address factory, address tokenA, address tokenB) internal pure returns (address pair) {
-        (address token0, address token1) = sortTokens(tokenA, tokenB);
+        (address token0, address token1) = sortTokens(tokenA, tokenB); //给俩个地址排序  
         pair = address(uint(keccak256(abi.encodePacked(
                 hex'ff',
                 factory,
-                keccak256(abi.encodePacked(token0, token1)),
+                keccak256(abi.encodePacked(token0, token1)), // slat 
                 hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash
             ))));
     }
@@ -33,10 +38,11 @@ library UniswapV2Library {
     }
 
     // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
+    // 要放入A的数量   池子中A的数量  B的数量   --》 根据 放入A的数量  池子中AB数量  计算要放入B的数量 
     function quote(uint amountA, uint reserveA, uint reserveB) internal pure returns (uint amountB) {
         require(amountA > 0, 'UniswapV2Library: INSUFFICIENT_AMOUNT');
         require(reserveA > 0 && reserveB > 0, 'UniswapV2Library: INSUFFICIENT_LIQUIDITY');
-        amountB = amountA.mul(reserveB) / reserveA;
+        amountB = amountA.mul(reserveB) / reserveA;  // 
     }
 
     // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
