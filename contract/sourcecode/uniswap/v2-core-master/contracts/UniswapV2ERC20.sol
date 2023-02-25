@@ -78,18 +78,23 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
         return true;
     }
 
-    // 
+    // LP取出流动性  owner=LP  spender=router2  value=liquidity  v r s = component of the permit signature
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
         require(deadline >= block.timestamp, 'UniswapV2: EXPIRED');
         bytes32 digest = keccak256(
-            abi.encodePacked(
+            abi.encodePacked(  // abi.encodePacked 的参数以不填充的方式编码
                 '\x19\x01',
-                DOMAIN_SEPARATOR,
-                keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]++, deadline))
+                DOMAIN_SEPARATOR,   // EIP712Domain(string name,string version,uint256 chainId,address verifyingContract) 
+                keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]++, deadline)) // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
             )
         );
-        address recoveredAddress = ecrecover(digest, v, r, s);
+        // https://soliditydeveloper.com/ecrecover 
+        //eth_sign用于签署任意数据。这使它成为最强大、最简单的（只是签名数据），但也是最危险的。这里的大问题是您可以让用户签署实际上是交易的数据。
+        //personal_sign 主要用于实现用户登录功能
+        //EIP-712 解决的主要问题是确保用户确切地知道他们正在签署什么，合约地址和网络，并且每个签名最多只能使用一次。
+        // 这个 digest 包含俩个方法 EIP712Domain   Permit
+        address recoveredAddress = ecrecover(digest, v, r, s);  // 这是什么? 校验签名 
         require(recoveredAddress != address(0) && recoveredAddress == owner, 'UniswapV2: INVALID_SIGNATURE');
-        _approve(owner, spender, value);
+        _approve(owner, spender, value); // approve(LP, router2, value)   批准LP的token给router2使用 
     }
 }

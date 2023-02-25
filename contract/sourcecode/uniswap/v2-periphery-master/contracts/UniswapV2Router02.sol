@@ -47,7 +47,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         uint amountBMin
     ) internal virtual returns (uint amountA, uint amountB) {  // 返回 放入了多少 A  多少 B token 
         // create the pair if it doesn't exist yet
-        if (IUniswapV2Factory(factory).getPair(tokenA, tokenB) == address(0)) {
+        if (IUniswapV2Factory(factory).getPair(tokenA, tokenB) == address(0)) {  // 那以后不需要在自己合约做这个事情了  直接调用router去添加流动性 节省gas费用吗?
             IUniswapV2Factory(factory).createPair(tokenA, tokenB);
         }
         (uint reserveA, uint reserveB) = UniswapV2Library.getReserves(factory, tokenA, tokenB); // 查询当前池里A和B的数量 
@@ -118,7 +118,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
     }
 
     // **** REMOVE LIQUIDITY ****
-    // 这个方法只是返回 该返回给LP多少的token数量  并没牵涉到转账 
+    // 这个方法返回给LP多少的token数量  burn方法中有转账逻辑 
     function removeLiquidity(
         address tokenA,
         address tokenB,
@@ -129,7 +129,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         uint deadline
     ) public virtual override ensure(deadline) returns (uint amountA, uint amountB) {
         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);  // 得到pair地址  
-        IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair  
+        IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
         (uint amount0, uint amount1) = IUniswapV2Pair(pair).burn(to); // 先把 LP的 liquidity 发送给pair  销毁的时候  根据这个去计算该返回的 token 数量  这里会不会有bug 
         (address token0,) = UniswapV2Library.sortTokens(tokenA, tokenB);
         (amountA, amountB) = tokenA == token0 ? (amount0, amount1) : (amount1, amount0);
@@ -153,11 +153,11 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             liquidity,
             amountTokenMin,
             amountETHMin,
-            address(this),
+            address(this),   // 第一次先转给自己  然后再转给用户 
             deadline
         );
-        // 把token转给LP
-        TransferHelper.safeTransfer(token, to, amountToken);
+        // 把token转给LP   前面调用了 removeLiquidity  不会重复转俩次吗？  上面那个地址是 address(this)
+        TransferHelper.safeTransfer(token, to, amountToken); 
         // 先把 WETH 取出来 
         IWETH(WETH).withdraw(amountETH);  //只能接收WETH 
         // 然后转给 LP  不明白是如何从 ROUTER 转给LP的    to是 LP 地址 ？
@@ -187,11 +187,13 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         bytes32 s  // The s component of the permit signature
     ) external virtual override returns (uint amountA, uint amountB) {
         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);
-        uint value = approveMax ? uint(-1) : liquidity;  // 如果批准最大  -1 就是 (uint).MAX 
-        IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
-        (amountA, amountB) = removeLiquidity(tokenA, tokenB, liquidity, amountAMin, amountBMin, to, deadline);
+        uint value = approveMax ? uint(-1) : liquidity;  // 如果批准最大 -1 就是 (uint).MAX 
+        //EIP-712 解决的主要问题是确保用户确切地知道他们正在签署什么，合约地址和网络，并且每个签名最多只能使用一次
+        IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s); // 批准LP的token给router2使用   这里牵涉到了EIP-712签名   
+        (amountA, amountB) = removeLiquidity(tokenA, tokenB, liquidity, amountAMin, amountBMin, to, deadline);  // 直接转给 to 地址  
     }
 
+    //Removes liquidity from an ERC-20⇄WETTH pool and receive ETH without pre-approval, thanks to permit.
     function removeLiquidityETHWithPermit(
         address token,
         uint liquidity,
@@ -222,14 +224,18 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             liquidity,
             amountTokenMin,
             amountETHMin,
-            address(this),
+            address(this),  //先转给自己 
             deadline
         );
+        // 把token转给LP 
         TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
+        // 提取ETH到这个账号来 
         IWETH(WETH).withdraw(amountETH);
+        // 把ETH转给LP
         TransferHelper.safeTransferETH(to, amountETH);
     }
 
+    // 不同的实现方法
     function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
@@ -249,36 +255,46 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
 
     // **** SWAP ****
     // requires the initial amount to have already been sent to the first pair
+    // 已经把token转给第一个pair合约了  然后转给第二个  再第三个 如此往复 
     function _swap(uint[] memory amounts, address[] memory path, address _to) internal virtual {
-        for (uint i; i < path.length - 1; i++) {
-            (address input, address output) = (path[i], path[i + 1]);
-            (address token0,) = UniswapV2Library.sortTokens(input, output);
-            uint amountOut = amounts[i + 1];
-            (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOut) : (amountOut, uint(0));
-            address to = i < path.length - 2 ? UniswapV2Library.pairFor(factory, output, path[i + 2]) : _to;
+        for (uint i; i < path.length - 1; i++) {  
+            (address input, address output) = (path[i], path[i + 1]); // 合约对  例如 (USDT,ETH)
+            (address token0,) = UniswapV2Library.sortTokens(input, output); // 排序
+            // amounts[0] = amountIn  第一个是输入的USDT数量  第二个是换到的ETH数量  第三个是能换到的BNB数量 
+            uint amountOut = amounts[i + 1];  //早就计算好的 能够拿到多少token  能拿多少 ETH
+            (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOut) : (amountOut, uint(0));  
+            // 如果不是最后  那么就获取pair合约地址  否则就是接收者地址   妙啊  这个三目运算    
+            // 这个 pair合约变成了 (ETH,BNB) 
+            address to = i < path.length - 2 ? UniswapV2Library.pairFor(factory, output, path[i + 2]) : _to;  
+            // 0, amountOut, pair(ETH,BNB), bytes[0]
+            // pair(USDT,ETH).swap(0, amountOut, pair(ETH,BNB), bytes[0])
+            // 把 ETH 发送给 pair(ETH,BNB)  更新pair(USDT,ETH)的流动性数值 
             IUniswapV2Pair(UniswapV2Library.pairFor(factory, input, output)).swap(
                 amount0Out, amount1Out, to, new bytes(0)
             );
         }
     }
 
+    // msg.sender should have already given the router an allowance of at least amountIn on the input token.
     function swapExactTokensForTokens(
-        uint amountIn,
-        uint amountOutMin,
-        address[] calldata path,
-        address to,
+        uint amountIn,          //要换多少
+        uint amountOutMin,      //最低多少
+        address[] calldata path, //swap路径  必须存在且有流动性  比如 USDT->ETH->BNB   这是前端传进来的 
+        address to,              //接收者
         uint deadline
     ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
-        amounts = UniswapV2Library.getAmountsOut(factory, amountIn, path);
+        amounts = UniswapV2Library.getAmountsOut(factory, amountIn, path);  // 这个amounts 存了每次swap可以换多少token  
         require(amounts[amounts.length - 1] >= amountOutMin, 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT');
+        // token=path[0]  from=msg.sender  to=UniswapV2Library.pairFor(factory, path[0], path[1])   value=amouts[0]
+        // 把第一个token转给 pair合约   转了USDT给 pair合约(USDT,ETH) 
         TransferHelper.safeTransferFrom(
             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]
         );
-        _swap(amounts, path, to);
+        _swap(amounts, path, to);  
     }
 
     function swapTokensForExactTokens(
-        uint amountOut,
+        uint amountOut,   // The amount of output tokens to receive.  想要多少token  和上面是逆着来的 
         uint amountInMax,
         address[] calldata path,
         address to,
@@ -292,6 +308,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         _swap(amounts, path, to);
     }
 
+    // 用WETH 换取其他token  用多少去换是确定的 根据 msg.value 来决定   WETH -> xxx -> XXX  第一个必须是 WETH   
     function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
@@ -308,6 +325,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         _swap(amounts, path, to);
     }
 
+    //用其他 token 换取 WETH 换多少是确定的
     function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
         external
         virtual
@@ -326,6 +344,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
 
+    // 用其他 token 换取 WETH    用多少去换是确定的 
     function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
@@ -344,6 +363,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
 
+    // 用 WETH 换取其他 token  换多少是确定的
     function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
         external
         virtual
@@ -372,10 +392,10 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             uint amountInput;
             uint amountOutput;
             { // scope to avoid stack too deep errors
-            (uint reserve0, uint reserve1,) = pair.getReserves();
-            (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
-            amountInput = IERC20(input).balanceOf(address(pair)).sub(reserveInput);
-            amountOutput = UniswapV2Library.getAmountOut(amountInput, reserveInput, reserveOutput);
+                (uint reserve0, uint reserve1,) = pair.getReserves();
+                (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
+                amountInput = IERC20(input).balanceOf(address(pair)).sub(reserveInput);
+                amountOutput = UniswapV2Library.getAmountOut(amountInput, reserveInput, reserveOutput);
             }
             (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOutput) : (amountOutput, uint(0));
             address to = i < path.length - 2 ? UniswapV2Library.pairFor(factory, output, path[i + 2]) : _to;
@@ -383,6 +403,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         }
     }
 
+    // 任意token互换  界定输入多少  最小获取多少目标token数量  不符合就不交换了  有点像挂定价单    很耗费gas费感觉  
     function swapExactTokensForTokensSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
@@ -390,17 +411,21 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         address to,
         uint deadline
     ) external virtual override ensure(deadline) {
+        // 给第一个pair 发送 token 
         TransferHelper.safeTransferFrom(
             path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn
         );
+        // 最后一个 token的余额  
         uint balanceBefore = IERC20(path[path.length - 1]).balanceOf(to);
         _swapSupportingFeeOnTransferTokens(path, to);
+        // 最后一个token  交换后的余额 - swap前的余额 >= amountOutMin    不然就不玩了  revert  
         require(
             IERC20(path[path.length - 1]).balanceOf(to).sub(balanceBefore) >= amountOutMin,
             'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
 
+    // 用WETH换其他 token  确定最少获取多少目标token数量  不行拉倒  
     function swapExactETHForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
@@ -425,6 +450,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         );
     }
     
+    // 用其他 token 换取 WETH  确定输入token数量  和最后换取的最少数量   不行拉倒
     function swapExactTokensForETHSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
@@ -448,11 +474,13 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         TransferHelper.safeTransferETH(to, amountOut);
     }
 
-    // **** LIBRARY FUNCTIONS ****
+    // 根据 放入A的数量  池子中AB数量  计算要放入B的数量 
+    // **** LIBRARY FUNCTIONS ****  
     function quote(uint amountA, uint reserveA, uint reserveB) public pure virtual override returns (uint amountB) {
         return UniswapV2Library.quote(amountA, reserveA, reserveB);
     }
 
+    // 拿多少A换  池子中A的数量  池子中B的数量   返回可以换到B的数量   
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
         public
         pure
@@ -463,6 +491,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         return UniswapV2Library.getAmountOut(amountIn, reserveIn, reserveOut);
     }
 
+    // 根据要换多少目标token  确定要给多少token
     function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut)
         public
         pure
@@ -473,6 +502,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         return UniswapV2Library.getAmountIn(amountOut, reserveIn, reserveOut);
     }
 
+    // 给定路径和token的数量  算出每一环能拿到多少token
     function getAmountsOut(uint amountIn, address[] memory path)
         public
         view
@@ -483,6 +513,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         return UniswapV2Library.getAmountsOut(factory, amountIn, path);
     }
 
+    // 给定路径  和最后要多少token   算出每一环应该给多少token
     function getAmountsIn(uint amountOut, address[] memory path)
         public
         view
