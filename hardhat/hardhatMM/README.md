@@ -1,8 +1,12 @@
 # Sample Hardhat Project
  
+ 
 
 https://hardhat.org/hardhat-runner/docs/getting-started#overview
 
+
+
+## 高阶玩法 
 
 ```shell
 Hardhat Runtime Environment (HRE)
@@ -97,6 +101,12 @@ Hardhat errors
 
 ```
 
+
+
+
+
+
+## 基础使用 
 ```shell
 
 快速创建  {hardhat + ethers.js + typescript}
@@ -213,7 +223,7 @@ Writing task and scripts
 
 
 使用 typescript 
-    install:  If you installed @nomicfoundation/hardhat-toolbox using npm 7 or higher, you dont need to follow these steps.
+    install:  If you installed @nomicfoundation/hardhat-toolbox     --  using npm 7 or higher, you dont need to follow these steps.
         npm install --save-dev ts-node typescript
         npm install --save-dev chai @types/node @types/mocha @types/chai
     rename config file: mv hardhat.config.js hardhat.config.ts
