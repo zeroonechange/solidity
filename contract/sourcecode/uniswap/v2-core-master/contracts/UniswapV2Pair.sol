@@ -28,6 +28,8 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     uint public kLast; // reserve0 * reserve1, as of immediately after the most recent liquidity event
 
     uint private unlocked = 1;
+
+    //控制同步锁
     modifier lock() {
         require(unlocked == 1, 'UniswapV2: LOCKED');
         unlocked = 0;
@@ -71,13 +73,17 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
 
     // update reserves and, on the first call per block, price accumulators
     // balance 是 pair上的余额   是最新值   reserve是旧的 
+    // 价格更新 加权平均价格 TWAP 
     function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private {
-        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'UniswapV2: OVERFLOW');
-        uint32 blockTimestamp = uint32(block.timestamp % 2**32);  // 时间戳 
+        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'UniswapV2: OVERFLOW'); 
+        // block.timestamp is a uint256 value in seconds since the epoch.
+        uint32 blockTimestamp = uint32(block.timestamp % 2**32);  // Unix时间戳溢出32位 发生在 02/07/2106年
         uint32 timeElapsed = blockTimestamp - blockTimestampLast; // overflow is desired
         if (timeElapsed > 0 && _reserve0 != 0 && _reserve1 != 0) {
             // * never overflows, and + overflow is desired
             //  uint112 as a UQ112x112 
+            // 采用二进制定点制进行编码和操作价格 UQ112.112 左右俩边112位表示精度 [0, 2^112-1]  这样就224位   剩余256-224=32位
+            // 多出来的 32位 存储由于重复累计价格导致的溢出数据 
             price0CumulativeLast += uint(UQ112x112.encode(_reserve1).uqdiv(_reserve0)) * timeElapsed;  // 加权价格平均 
             price1CumulativeLast += uint(UQ112x112.encode(_reserve0).uqdiv(_reserve1)) * timeElapsed;
         }
@@ -121,7 +127,10 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         bool feeOn = _mintFee(_reserve0, _reserve1);  // 协议费用  
         uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         if (_totalSupply == 0) {  // 如果总供应量=0  就是池子里还没任何东西  
-            liquidity = Math.sqrt(amount0.mul(amount1)).sub(MINIMUM_LIQUIDITY); // 流动性 = sqrt(ab) - 1000 
+            liquidity = Math.sqrt(amount0.mul(amount1)).sub(MINIMUM_LIQUIDITY); // 流动性 = sqrt(ab) - 1000     防止 首次铸币攻击 
+            // 首次铸币攻击是指攻击者在第一次添加流动性时存入最小单位（10的-18次方，即1 wei）的流动性，比如1 wei ABC和1 wei XYZ，此时将铸造1 wei 流动性代币（根号1）；
+            // 同时，攻击者在同一个交易中继续向池子转入（非铸造）100万个ABC和100万个XYZ，接着调用 sync()方法更新缓存余额，
+            // 此时1 wei的流动性代币价值100万+(10的-18次方)ABC和100万+(10的-18次方)XYZ，其他流动性参与者要想添加流动性，需要等价的大量代币，其价格可能高到大部分人无法参与。
            _mint(address(0), MINIMUM_LIQUIDITY); // permanently lock the first MINIMUM_LIQUIDITY tokens   直接 mint 1000个给 地址0  
         } else {
             // 根据俩种 token 的总比例 算出  取最小值 
@@ -179,7 +188,9 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
             require(to != _token0 && to != _token1, 'UniswapV2: INVALID_TO');
             if (amount0Out > 0) _safeTransfer(_token0, to, amount0Out); // optimistically transfer tokens    
             if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // ETH token   从pair(USDT,ETH) 转给 pair(ETH,BNB)
-            if (data.length > 0) IUniswapV2Callee(to).uniswapV2Call(msg.sender, amount0Out, amount1Out, data); // 默认是空的  
+            // 闪电贷的实现原理就是在这里  实现IUniswapV2Callee 接口  在里面写具体的逻辑
+            // 在借到钱后  执行自己的逻辑  必须及时还   不然后面的 balance1Adjusted*balance1Adjusted >= _reserve0*_reserve1  对不上 
+            if (data.length > 0) IUniswapV2Callee(to).uniswapV2Call(msg.sender, amount0Out, amount1Out, data); // 默认是空的    这里应该是闪电贷的起点  
             balance0 = IERC20(_token0).balanceOf(address(this));  // 转账后查询池子余额
             balance1 = IERC20(_token1).balanceOf(address(this));  // 这个余额减少 
         }
@@ -192,7 +203,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
             uint balance0Adjusted = balance0.mul(1000).sub(amount0In.mul(3));    // 为啥要这么写?   Adjustment for fee 手续费调整  
             // Uniswap的swap方法可以同时支持闪电贷和交易功能，当通过闪电贷同时借出x和y两种代币时，需要分别对x和y收取0.3%的手续费，因此需要先扣除手续费，再保证余额满足k值约束。 
             uint balance1Adjusted = balance1.mul(1000).sub(amount1In.mul(3));
-            require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(1000**2), 'UniswapV2: K'); // 保持常数K的恒定 
+            require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(1000**2), 'UniswapV2: K'); // 保持常数K的恒定    闪电贷 
         }
 
         _update(balance0, balance1, _reserve0, _reserve1);  //更新池子中的流动性
@@ -200,6 +211,10 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     }
 
     // force balances to match reserves
+    // 通货膨胀  将多余的流动性转给任何人   
+    // Uniswap v2只支持缓存代币余额的最大值为(2的112次方)-1。该数字已经大到可以支持代币总量超过千万亿的18位小数代币。
+    // 如果任意一种代币余额超过最大值，swap方法的调用将会失败（由于_update()方法的检查导致）。
+    // 为了从这种状况中恢复，任何人都可以调用skim()方法来从池子中移除多余的代币。  
     function skim(address to) external lock {
         address _token0 = token0; // gas savings
         address _token1 = token1; // gas savings
@@ -208,6 +223,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     }
 
     // force reserves to match balances
+    // 通缩    根据token 缓存余额  去更新流动性    
     function sync() external lock {
         _update(IERC20(token0).balanceOf(address(this)), IERC20(token1).balanceOf(address(this)), reserve0, reserve1);
     }

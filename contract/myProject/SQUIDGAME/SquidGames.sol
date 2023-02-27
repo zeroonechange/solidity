@@ -1188,16 +1188,7 @@ contract SQUIDToken is ERC20, Ownable {
         _totalSupply = 0;
         
         _mint(msg.sender, INITIAL_TOTAL_SUPPLY);
-        // 是一对一对的创建 还是只需要加入一个      router  factory  pair 的区别是什么? 
         uniswapV2Router = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
-        
-         // Create a uniswap pair for this new token
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
     }
 }
-
-/**
-
-
- 
- */

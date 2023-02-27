@@ -28,7 +28,9 @@ contract UniswapV2Factory is IUniswapV2Factory {
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         assembly {
-            pair := create2(0, add(bytecode, 32), mload(bytecode), salt)
+            // Deterministic pair address 确定的交易对地址  
+            //使用以太坊新的CREATE2操作码生成具有确定地址的交易对合约。这意味着交易对合约的地址是可以通过链下计算的，而无需查询链上状态。
+            pair := create2(0, add(bytecode, 32), mload(bytecode), salt)   
         }
         IUniswapV2Pair(pair).initialize(token0, token1);
         getPair[token0][token1] = pair;
@@ -37,6 +39,7 @@ contract UniswapV2Factory is IUniswapV2Factory {
         emit PairCreated(token0, token1, pair, allPairs.length);
     }
 
+    // 这个是Protocol fee 协议手续费  0.005% 手续费将被发送到合约中的feeTo地址
     function setFeeTo(address _feeTo) external {
         require(msg.sender == feeToSetter, 'UniswapV2: FORBIDDEN');
         feeTo = _feeTo;

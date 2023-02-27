@@ -12,7 +12,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
     using SafeMath for uint;
 
     address public immutable override factory;  // 工厂地址   用于生成 交易对 pair
-    address public immutable override WETH;     // wrapper eth  包装 eth   因为eth不是标准的erc20 协议
+    address public immutable override WETH;     // wrapper eth  包装 eth   因为eth不是标准的erc20 协议   
  
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'UniswapV2Router: EXPIRED');
@@ -52,7 +52,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         }
         (uint reserveA, uint reserveB) = UniswapV2Library.getReserves(factory, tokenA, tokenB); // 查询当前池里A和B的数量 
         if (reserveA == 0 && reserveB == 0) {
-            (amountA, amountB) = (amountADesired, amountBDesired);  // 如果 是空池  直接返回比例
+            (amountA, amountB) = (amountADesired, amountBDesired);  // 如果 是空池  直接返回比例  第一次添加流动性 
         } else { 
             uint amountBOptimal = UniswapV2Library.quote(amountADesired, reserveA, reserveB);   // 根据 放入A的数量  池子中AB数量  计算要放入B的数量 
             if (amountBOptimal <= amountBDesired) {  // 如果 要放入的B 小于 即将放入的  
