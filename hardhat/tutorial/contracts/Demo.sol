@@ -5,7 +5,7 @@ import "hardhat/console.sol";
 contract Demo {
     event Error(string);
     fallback() external payable {
-       console.log("---fallback---  Demo ");
+      console.log("---fallback---  Demo ");
       emit Error("call of a non-existent function");
     }
 }
