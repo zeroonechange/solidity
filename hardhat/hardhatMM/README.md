@@ -32,7 +32,7 @@ Compilation artifacts
     use the Fully Qualified Name of the contract: hre.artifacts.readArtifact("contracts/Bar.sol:Bar")
     The debug file has all the information that is necessary to reproduce the compilation and to debug the contracts: this includes the original solc input and output, and the solc version used to compile it.
     contains one artifact (.json) file and one debug (.dbg.json) file for each contract in that file
-    总结:  每一个 .sol 文件编译后会得到 俩个json文件  里面包含了很多信息  
+    总结:  每一个 .sol 文件编译后会得到 俩个json文件  里面包含了很多信息    可以通过 hre获取到这些信息 
 
 Multiple Solidity versions
     可以让A.sol编译用 solidity 0.5.5   B.sol编译用 solidity 0.8.0
@@ -65,7 +65,7 @@ Flattening your contracts
     合并多个合约的代码到一个文件里面去  
 
 Running tests in Visual Studio Code
-    using Mocha Test Explorer   BY    npm install --save-dev mocha
+    using Mocha Test Explorer     BY    npm install --save-dev mocha
     a file named .mocharc.json:
                     {
                     "require": "hardhat/register",

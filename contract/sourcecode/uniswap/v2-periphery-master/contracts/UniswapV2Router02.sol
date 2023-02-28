@@ -82,7 +82,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         uint deadline
     ) external virtual override ensure(deadline) returns (uint amountA, uint amountB, uint liquidity) {
         (amountA, amountB) = _addLiquidity(tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin);  // 根据参数 得到想放多少 token 
-        address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);  // 获得pair 地址 
+        address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);  // 获得pair 地址
         TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA); // 将 token A 从msg.sender 转到 pair里面去   数量为amountA
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);  
         liquidity = IUniswapV2Pair(pair).mint(to); // 得到流动性 
