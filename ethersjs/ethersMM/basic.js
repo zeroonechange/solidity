@@ -323,8 +323,6 @@ const query_event = async() => {
 // query_event()
 
 
-
-
 /**
  监听合约事件
  持续监听合约的事件     ：   contract.on("eventName", function)
@@ -342,7 +340,7 @@ const observe_usdt_event = async() => {
     ];
     // 生成USDT合约对象
     const contractUSDT = new ethers.Contract(contractAddress, abi, providerETH);
-    var count = 0
+    let count = 0
     try{
         console.log("\n1. 利用contract.once()，监听一次Transfer事件");
         contractUSDT.once('Transfer', (from, to, value)=>{          // 只监听一次
