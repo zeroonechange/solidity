@@ -442,19 +442,26 @@ const batch_collect = async() => {
 
 
 /**
- * 数字签名脚本  以太坊中的数字签名ECDSA   双椭圆曲线数字签名算法 
-    私钥: 0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b
-    公钥: 0xe16C1623c1AA7D919cd2241d8b36d9E79C1Be2A2
-    消息: 0x1bf2c0ce4546651a1a2feb457b39d891a6b83931cc2454434f39961345ac378c
-    以太坊签名消息: 0xb42ca4636f721c7a331923e764587e98ec577cea1a185f60dfcc14dbb9bd900b
-    签名: 0x390d704d7ab732ce034203599ee93dd5d3cb0d4d1d7c600ac11726659489773d559b12d220f99f41d17651b0c1c6a669d346a397f8541760d6b32a5725378b241c
+ * 数字签名脚本  
+双椭圆曲线数字签名算法 ECDSA
 
-https://github.com/WTFAcademy/WTF-Ethers/blob/main/18_Signature/readme.md
-https://github.com/AmazingAng/WTF-Solidity/blob/main/37_Signature/readme.md
+简单来说就是  签名= S(私钥,消息)     Verify={R(签名,消息)==公钥}    S=签名/加密   R=恢复公钥 
+	私钥: 0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b
+	公钥: 0xe16C1623c1AA7D919cd2241d8b36d9E79C1Be2A2
+	消息: 0x1bf2c0ce4546651a1a2feb457b39d891a6b83931cc2454434f39961345ac378c
+	以太坊签名消息: 0xb42ca4636f721c7a331923e764587e98ec577cea1a185f60dfcc14dbb9bd900b
+	签名: 0x390d704d7ab732ce034203599ee93dd5d3cb0d4d1d7c600ac11726659489773d559b12d220f99f41d17651b0c1c6a669d346a397f8541760d6b32a5725378b241c
 
-这些后面再补吧  先过了 
+    签名者利用 私钥 对 消息 创建签名 
+    其他人利用 消息 签名 公钥 去验证   先通过签名和消息 求得公钥 然后再对比是否一致 
+
+    这种写法就提前把 
+    白名单确定好 然后在后端通过钱包根据白名单生成消息和签名  部署NFT 把钱包公钥放合约里面  需要mint时  请求后端得到签名  再去跑合约去mint
+    私钥属于钱包  消息和签名都是由钱包生成   公钥放合约  需要mint的时候  传进去消息和签名  合约会根据这俩值解析得到公钥 如果一致就可以mint
+
+    https://github.com/WTFAcademy/WTF-Ethers/blob/main/18_Signature/readme.md
+    https://github.com/AmazingAng/WTF-Solidity/blob/main/37_Signature/readme.md
  */
-
 
 
 /**
@@ -519,7 +526,6 @@ function throttle(fn, delay) {
  * 解码交易详情
  *  未决交易（Pending Transaction）  未决交易是用户发出但没被矿工打包上链的交易，在mempool（交易内存池）中出现
  */
-
 const decode_pending_transaction = async() => {
     // 1. 创建provider和wallet，监听事件时候推荐用wss连接而不是http
     const ALCHEMY_MAINNET_WSSURL = 'wss://eth-mainnet.g.alchemy.com/v2/qXFbrurfVJ5Le9N3T3HwEi8Wc06v0Ud3';
@@ -534,7 +540,7 @@ const decode_pending_transaction = async() => {
 
     // 4. 监听pending的uniswapV3交易，获取交易详情，然后解码。
     //  网络不活跃的时候，可能需要等待几分钟才能监听到一笔。
-    console.log("\n4. 监听pending交易，获取txHash，并输出交易详情。")
+    console.log("\n 监听pending交易，获取txHash，并输出交易详情。")
     provider.on("pending", throttle(async (txHash) => {
         if (txHash) {
             // 获取tx详情
@@ -542,19 +548,19 @@ const decode_pending_transaction = async() => {
             if (tx) {
                 // filter pendingTx.data
                 if (tx.data.indexOf(iface.getSighash("exactInputSingle")) !== -1) {
-                    // 打印txHash
-                    console.log(`\n[${(new Date).toLocaleTimeString()}] 监听Pending交易: ${txHash} \r`);
+                    // [11:42:14] 监听Pending交易: 0x1d0ccd25e61c35482882ecc9885c4fc46bdf0b46491e7358899a86f1d84e8583 
+                    console.log(`\n [${(new Date).toLocaleTimeString()}] 监听Pending交易: ${txHash} \r`);
 
                     // 打印解码的交易详情
                     let parsedTx = iface.parseTransaction(tx)
-                    console.log("pending交易详情解码：")
+                    console.log("\n ===================pending交易详情解码：")
                     console.log(parsedTx);
                     // Input data解码
-                    console.log("Input Data解码：")
+                    console.log("\n -------------------Input Data解码：")
                     console.log(parsedTx.args);
                 }
             }
         }
     }, 100));
 }
-decode_pending_transaction()
+// decode_pending_transaction()
