@@ -89,9 +89,9 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
     /// @inheritdoc IUniswapV3PoolState
     uint128 public override liquidity;
 
-    /// @inheritdoc IUniswapV3PoolState
+    /// @inheritdoc IUniswapV3PoolState  记录了一个 tick 包含的元数据，这里只会包含所有 Position 的 lower/upper ticks
     mapping(int24 => Tick.Info) public override ticks;
-    /// @inheritdoc IUniswapV3PoolState
+    /// @inheritdoc IUniswapV3PoolState  tick 位图，因为这个位图比较长（一共有 887272x2 个位），大部分的位不需要初始化   因此分成两级来管理，每 256 位为一个单位，一个单位称为一个 word
     mapping(int16 => uint256) public override tickBitmap;
     /// @inheritdoc IUniswapV3PoolState
     mapping(bytes32 => Position.Info) public override positions;
@@ -396,6 +396,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
         bool flippedUpper;
         if (liquidityDelta != 0) {
             uint32 time = _blockTimestamp();
+            // oracle 部分 
             (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) = observations.observeSingle(
                 time,
                 0,
@@ -485,7 +486,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
         uint256 balance1Before;
         if (amount0 > 0) balance0Before = balance0();
         if (amount1 > 0) balance1Before = balance1();
-        IUniswapV3MintCallback(msg.sender).uniswapV3MintCallback(amount0, amount1, data);
+        IUniswapV3MintCallback(msg.sender).uniswapV3MintCallback(amount0, amount1, data);  
         if (amount0 > 0) require(balance0Before.add(amount0) <= balance0(), 'M0');
         if (amount1 > 0) require(balance1Before.add(amount1) <= balance1(), 'M1');
 

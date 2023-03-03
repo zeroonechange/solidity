@@ -30,7 +30,7 @@ contract NonfungiblePositionManager is
     PeripheryValidation,
     SelfPermit
 {
-    // details about the uniswap position
+    // details about the uniswap position  用户提供的流动性 
     struct Position {
         // the nonce for permits
         uint96 nonce;
@@ -216,7 +216,7 @@ contract NonfungiblePositionManager is
                 token0: poolKey.token0,
                 token1: poolKey.token1,
                 fee: poolKey.fee,
-                tickLower: position.tickLower,
+                tickLower: position.tickLower,  // 要提前算好 
                 tickUpper: position.tickUpper,
                 amount0Desired: params.amount0Desired,
                 amount1Desired: params.amount1Desired,

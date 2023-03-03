@@ -61,15 +61,16 @@ library LiquidityAmounts {
         uint256 amount1
     ) internal pure returns (uint128 liquidity) {
         if (sqrtRatioAX96 > sqrtRatioBX96) (sqrtRatioAX96, sqrtRatioBX96) = (sqrtRatioBX96, sqrtRatioAX96);
-
-        if (sqrtRatioX96 <= sqrtRatioAX96) {
+        // 分为三种情况  如果当前价格小于区间最小  那么要添加token 为 横坐标  因为双曲线  价格越大 x轴往左  会减少x的流动性 需要添加x来平衡
+        // 如果是在中间 那么看流动性最低的 
+        if (sqrtRatioX96 <= sqrtRatioAX96) {  // 全部为 A token 
             liquidity = getLiquidityForAmount0(sqrtRatioAX96, sqrtRatioBX96, amount0);
         } else if (sqrtRatioX96 < sqrtRatioBX96) {
             uint128 liquidity0 = getLiquidityForAmount0(sqrtRatioX96, sqrtRatioBX96, amount0);
             uint128 liquidity1 = getLiquidityForAmount1(sqrtRatioAX96, sqrtRatioX96, amount1);
 
-            liquidity = liquidity0 < liquidity1 ? liquidity0 : liquidity1;
-        } else {
+            liquidity = liquidity0 < liquidity1 ? liquidity0 : liquidity1;  // 看那个小  因为另一个可能不足 
+        } else {   // 全部为 B token 
             liquidity = getLiquidityForAmount1(sqrtRatioAX96, sqrtRatioBX96, amount1);
         }
     }
