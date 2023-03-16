@@ -7,7 +7,46 @@
 
 
 
-
+多池子交易
+	工厂合约
+		池子部署  CREATE2 加盐 确定合约地址(token0,token1,tickSpacing)
+			keccak256(
+                abi.encodePacked(
+                    hex"ff",	//  EIP 中定义的，为了区分由 CREATE 和 CREATE2 创建的合约地址
+                    factory,   
+                    keccak256(
+                        abi.encodePacked(token0, token1, tickSpacing)  // 盐
+                    ),
+                    keccak256(type(UniswapV3Pool).creationCode)      // 合约代码的哈希用来防止碰撞——不同的合约可以有相同的盐值
+                )
+            )
+	交易路径
+		WETH/USDC,USDC/USDT,WBTC/USDT
+		WETH, USDC, USDT, WBTC
+		WETH, 60, USDC, 10, USDT, 60, WBTC     // 60 10 是 tickSpacing 
+		Path 库   20 + 3    20字节存放合约地址  3字节存放tickSpacing 长度
+				  比如 俩个交易对  A_60_B_10_C   三个 A_60_B_10_C_60_D		
+				操作 bytes 的库   https://github.com/GNSPS/solidity-bytes-utils  
+				从 字节数组中提取出一个子数组  以及各种转换
+				
+	多池子交易
+		把单池和多池分开  多池交易没滑点保护  只能最后检查最终输出数量revert
+		开一个循环  每次swap时通过path 看是否后面还有路径  然后一直swap 
+		更新报价单 
+		
+	用户界面
+		自动路由 路由寻找是前端来做的  基于图 A* 算法  用到库  https://github.com/anvaka/ngraph.path 
+		
+	Tick 舍入
+		其实就是一个四舍五入   价格是不固定的 tick是固定的  需要找到最近当前价格对应的tick 
+		对俩个 Q64.64做除法   得到结果去掉分数   再拿小数和0.5做比较  大于则累加1  
+		function divRound(int128 x, int128 y) internal pure returns (int128 result) {
+			int128 quot = ABDKMath64x64.div(x, y);      // 对两个 Q64.64 的数做除法
+			result = quot >> 64;                        // 结果舍入到十进制整数    分数部分被扔掉
+			if (quot % 2**64 >= 0x8000000000000000) {   // 对 2^64 取余  和 Q64.64 里的 0.5 比较  
+				result += 1;                            // 余数大于 则累加
+			}
+		}	
 
 跨tick交易
 	不同价格区间
@@ -20,7 +59,7 @@
 		swap时 多加一个参数  sqrtPriceLimitX96  只要大于这个就revert 
 		添加流动性时也要 amount0Min  amount1Min 就是滑点的边界值  最后再检查 如果低于这个就revert 
 	流动性计算
-		计算俩个 L   取最小的  
+		如果价格区间外  低于现价就是 Δy   否则就是x    在区间内  计算俩个 L   取最小的  
 	关于定点数的拓展
 		将价格转换成 tick 
 		solidity不支持浮点数运算  不支持开根号  会失去精度
@@ -35,6 +74,7 @@
 	数学库
 		solidity不支持浮点数运算  PRBMath 
 		tick 和 price 相互转换    TickMath
+	找到下一个tick 
 	Tick Bitmap Index 
 		bitmap就是像素点 0和1组成  看作一个flag  布隆过滤器 
 		tick 索引  一个无穷的数组 由01组成  一个字数256位  根据tick 得到字数的位置 和bit位 
