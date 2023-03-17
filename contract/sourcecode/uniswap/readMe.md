@@ -1,9 +1,43 @@
 
 
-
+## V3
 ```c
 
-https://y1cunhui.github.io/uniswapV3-book-zh-cn/docs/milestone_6/nft-renderer/
+
+官方文档                            https://docs.uniswap.org/contracts/v2/overview
+Uniswap V3 Book 中文版				https://y1cunhui.github.io/uniswapV3-book-zh-cn/
+官网池子							https://info.uniswap.org/#/pools/0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640
+Uniswap v3 详解（一）：设计原理		 https://paco0x.org/uniswap-v3-1/
+Uniswap v3 详解（二）：创建交易对/提供流动性	https://paco0x.org/uniswap-v3-2/
+Uniswap v3 详解（三）：交易过程		 https://paco0x.org/uniswap-v3-3/
+Uniswap v3 详解（四）：交易手续费	 https://paco0x.org/uniswap-v3-4/
+Uniswap v3 详解（五）：Oracle 预言机 https://paco0x.org/uniswap-v3-5/
+Uniswap v3 详解（六）：闪电贷		 https://paco0x.org/uniswap-v3-6/
+
+理解白皮书 							https://github.com/Dapp-Learning-DAO/Dapp-Learning/blob/main/defi/Uniswap-V3/whitepaperGuide/understandV3Witepaper.md
+
+深入理解 Uniswap v3 白皮书           https://hackmd.io/d4GTJiyrQFigUp80IFb-gQ
+深入理解 Uniswap v3 合约代码 （一）  https://hackmd.io/TDPPCAIgRRqVDPwsSm6Kfw#Uniswap-v3-core
+深入理解 Uniswap v3 合约代码 （二）  https://hackmd.io/cTPg4x2TR4WthYEF8anLug
+ 
+以上资料都生成pdf 保存下来了  
+
+V2和V3的区别挺多的  最核心就是 tick  position  的概念
+费率记录方式也很独特  记录外侧手续费总额   这个是一个全局的 拿收到的总费率/总流动性
+存放的现货价格是根号  利于计算 
+用Q64.64 因为solidity不支持浮点运算  用了一个第三方库 https://github.com/abdk-consulting/abdk-libraries-solidity
+还有就是 tick 和价格的转换  非常复杂  用了很多 magic number 目前没搞明白 
+流动性token也不再是之前的  而是NFT类型的 
+预言机这部分 暂时不知道用来干啥的 应该是套利之类的 
+这里面很多优化的 
+	1. 数据存储 比如Pool里面 slot 存放方式紧凑   bitmap tick index 也是  
+	2. 运算方式  二进制 左右移  掩码  取余   用库处理浮点数  开根号  求平均值
+	3. 数据传输方式  不直接传   回调转账-revert 
+	4. 算法  跨池交易 最短路径-图论   预言机-观测价格-二分搜索-均值 
+
+代码方面:
+	在源码里面再添加注释  。。。。 
+
  
 NFT positions
 	ERC721 概述   
@@ -20,9 +54,12 @@ NFT positions
 		单位流动性总费用     就是 费用之和/流动性  均摊  这个随着交易是逐渐递增的
 		tick 之外累积的费用   在tick被穿过时才会被更新  这样根据俩个tick 就知道了在这个区间累积了多少费用
 		比如  [A,B]  当价格从A到B  累计的单位费用是递增的   A记录费用=10   B记录=15  那么这个区间累积了费用为5   知道流动性 再去均摊
-		只有当tick被穿过时 才更新   拿当前的减去上一次记录的   
+		只有当tick被穿过时才更新   拿当前的减去上一次记录的   
+		在区间之外 如果现价<lower  表示方向往左  那么最新的记录点就是lower  
+					  现价>upper  表示方向往右  最新记录的就是 upper  悟了  看图 https://paco0x.org/uniswap-v3-4/
 		区间费用 = 总费用 - 低于下界tick费用 - 高于上界tick费用
 		swap  mint   burn  都会改变
+		
 	闪电贷费率
 		fee是固定的  
 	协议费率
@@ -210,16 +247,11 @@ NFT positions
 ```
 
 
-V3
-官方文档                            https://docs.uniswap.org/contracts/v2/overview
-深入理解 Uniswap v3 白皮书          https://hackmd.io/d4GTJiyrQFigUp80IFb-gQ
-深入理解 Uniswap v3 合约代码 （一）  https://hackmd.io/TDPPCAIgRRqVDPwsSm6Kfw#Uniswap-v3-core
-深入理解 Uniswap v3 合约代码 （二）  https://hackmd.io/cTPg4x2TR4WthYEF8anLug
- 
 
 
 
-V2
+## V2
+```c
 由 factor 创建 pair     pair就是交易对 例如 (USDT, ETH)  里面包含核心的计算逻辑  
 Router 提供给前端使用  封装了 pair 的核心方法  添加流动性  swap    还有多种选择 多个参数  
 
@@ -229,4 +261,4 @@ Router 提供给前端使用  封装了 pair 的核心方法  添加流动性  s
 
 https://docs.uniswap.org/contracts/v2/overview
 https://mirror.xyz/adshao.eth/g3EINzP2bfUniZNSs8aOHYsp96NMHHbTqYMnkIAa_pQ
-
+```
