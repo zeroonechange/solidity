@@ -3,6 +3,7 @@ pragma solidity =0.7.6;
 
 /// @title Prevents delegatecall to a contract
 /// @notice Base contract that provides a modifier for preventing delegatecall to methods in a child contract
+// 防止被调用 一个 modifier 去控制 必须当前地址是创建的时候的地址 
 abstract contract NoDelegateCall {
     /// @dev The original address of this contract
     address private immutable original;

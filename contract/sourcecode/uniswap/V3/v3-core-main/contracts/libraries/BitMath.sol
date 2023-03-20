@@ -3,6 +3,8 @@ pragma solidity >=0.5.0;
 
 /// @title BitMath
 /// @dev This library provides functionality for computing bit properties of an unsigned integer
+
+// 无符号整数 位运算 
 library BitMath {
     /// @notice Returns the index of the most significant bit of the number,
     ///     where the least significant bit is at index 0 and the most significant bit is at index 255
@@ -10,6 +12,7 @@ library BitMath {
     ///     x >= 2**mostSignificantBit(x) and x < 2**(mostSignificantBit(x)+1)
     /// @param x the value for which to compute the most significant bit, must be greater than 0
     /// @return r the index of the most significant bit
+    //  每一步移动   慢慢移动  最后看多少位 
     function mostSignificantBit(uint256 x) internal pure returns (uint8 r) {
         require(x > 0);
 

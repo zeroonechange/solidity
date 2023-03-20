@@ -6,6 +6,8 @@ import './BitMath.sol';
 /// @title Packed tick initialized state library
 /// @notice Stores a packed mapping of tick index to its initialized state
 /// @dev The mapping uses int16 for keys since ticks are represented as int24 and there are 256 (2^8) values per word.
+
+// 方便找下一个tick   根据 tickSpacing 来跳跃  
 library TickBitmap {
     /// @notice Computes the position in the mapping where the initialized bit for a tick lives
     /// @param tick The tick for which to compute the position

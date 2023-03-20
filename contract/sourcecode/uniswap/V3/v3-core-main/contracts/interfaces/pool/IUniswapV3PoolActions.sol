@@ -3,6 +3,9 @@ pragma solidity >=0.5.0;
 
 /// @title Permissionless pool actions
 /// @notice Contains pool methods that can be called by anyone
+
+// initialize  mint  collect burn  swap  flash  increaseObservationCardinalityNext
+// 规定了对外暴露的一些方法    初始化  铸造  LP取钱  燃烧  换钱   预言机-增加tick bitmap的基数
 interface IUniswapV3PoolActions {
     /// @notice Sets the initial price for the pool
     /// @dev Price is represented as a sqrt(amountToken1/amountToken0) Q64.96 value

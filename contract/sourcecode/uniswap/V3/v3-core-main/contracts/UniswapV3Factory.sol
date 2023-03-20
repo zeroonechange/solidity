@@ -17,35 +17,35 @@ contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegat
 
     /// @inheritdoc IUniswapV3Factory
     mapping(uint24 => int24) public override feeAmountTickSpacing;
-    /// @inheritdoc IUniswapV3Factory
-    mapping(address => mapping(address => mapping(uint24 => address))) public override getPool;
+    /// @inheritdoc IUniswapV3Factory   地址 地址  uint24 ->  地址    (token0,token1,fee)->pool address 
+    mapping(address => mapping(address => mapping(uint24 => address))) public override getPool;  // 通过地址 获取 mapping  再mapping  再mapping 无限套娃 
 
     constructor() {
         owner = msg.sender;
         emit OwnerChanged(address(0), msg.sender);
 
-        feeAmountTickSpacing[500] = 10;
-        emit FeeAmountEnabled(500, 10);
+        feeAmountTickSpacing[500] = 10;  // 把费率和 tickSpacing 写死了 
+        emit FeeAmountEnabled(500, 10);  // 发事件要gas吗 
         feeAmountTickSpacing[3000] = 60;
         emit FeeAmountEnabled(3000, 60);
         feeAmountTickSpacing[10000] = 200;
         emit FeeAmountEnabled(10000, 200);
     }
 
-    /// @inheritdoc IUniswapV3Factory
+    /// @inheritdoc IUniswapV3Factory   创建池子 
     function createPool(
         address tokenA,
         address tokenB,
         uint24 fee
     ) external override noDelegateCall returns (address pool) {
         require(tokenA != tokenB);
-        (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
+        (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);   // 三目运算  这样比大小  是正常的字符串吗  address比较 
         require(token0 != address(0));
         int24 tickSpacing = feeAmountTickSpacing[fee];
         require(tickSpacing != 0);
-        require(getPool[token0][token1][fee] == address(0));
-        pool = deploy(address(this), token0, token1, fee, tickSpacing);
-        getPool[token0][token1][fee] = pool;
+        require(getPool[token0][token1][fee] == address(0)); // 没有被创建过
+        pool = deploy(address(this), token0, token1, fee, tickSpacing);  // 部署合约 
+        getPool[token0][token1][fee] = pool;  // 写表    
         // populate mapping in the reverse direction, deliberate choice to avoid the cost of comparing addresses
         getPool[token1][token0][fee] = pool;
         emit PoolCreated(token0, token1, fee, tickSpacing, pool);
@@ -58,7 +58,7 @@ contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegat
         owner = _owner;
     }
 
-    /// @inheritdoc IUniswapV3Factory
+    /// @inheritdoc IUniswapV3Factory   扩展费率的基数
     function enableFeeAmount(uint24 fee, int24 tickSpacing) public override {
         require(msg.sender == owner);
         require(fee < 1000000);

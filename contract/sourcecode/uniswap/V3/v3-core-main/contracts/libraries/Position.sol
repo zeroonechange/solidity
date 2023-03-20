@@ -8,13 +8,13 @@ import './LiquidityMath.sol';
 /// @title Position
 /// @notice Positions represent an owner address' liquidity between a lower and upper tick boundary
 /// @dev Positions store additional state for tracking fees owed to the position
-library Position {
+library Position {  // 头寸 
     // info stored for each user's position
     struct Info {
         // the amount of liquidity owned by this position
-        uint128 liquidity;
+        uint128 liquidity;     // 该头寸拥有的流动性 
         // fee growth per unit of liquidity as of the last update to liquidity or fees owed
-        uint256 feeGrowthInside0LastX128;
+        uint256 feeGrowthInside0LastX128;    // 单元流动性 - 针对一个token 
         uint256 feeGrowthInside1LastX128;
         // the fees owed to the position owner in token0/token1
         uint128 tokensOwed0;

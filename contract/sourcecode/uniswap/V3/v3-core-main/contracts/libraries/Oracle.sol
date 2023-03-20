@@ -8,14 +8,15 @@ pragma solidity >=0.5.0 <0.8.0;
 /// maximum length of the oracle array. New slots will be added when the array is fully populated.
 /// Observations are overwritten when the full length of the oracle array is populated.
 /// The most recent observation is available, independent of the length of the oracle array, by passing 0 to observe()
+//  预言机 
 library Oracle {
     struct Observation {
-        // the block timestamp of the observation
-        uint32 blockTimestamp;
+        // the block timestamp of the observation  
+        uint32 blockTimestamp;   // 记录区块的时间戳
         // the tick accumulator, i.e. tick * time elapsed since the pool was first initialized
-        int56 tickCumulative;
+        int56 tickCumulative;   // tick index 的时间加权累积值
         // the seconds per liquidity, i.e. seconds elapsed / max(1, liquidity) since the pool was first initialized
-        uint160 secondsPerLiquidityCumulativeX128;
+        uint160 secondsPerLiquidityCumulativeX128; //  价格所在区间的流动性的时间加权累积值
         // whether or not the observation is initialized
         bool initialized;
     }
@@ -56,7 +57,7 @@ library Oracle {
         self[0] = Observation({
             blockTimestamp: time,
             tickCumulative: 0,
-            secondsPerLiquidityCumulativeX128: 0,
+            secondsPerLiquidityCumulativeX128: 0,   // 初始化的时候  都是0  
             initialized: true
         });
         return (1, 1);
@@ -96,7 +97,7 @@ library Oracle {
             cardinalityUpdated = cardinality;
         }
 
-        indexUpdated = (index + 1) % cardinalityUpdated;
+        indexUpdated = (index + 1) % cardinalityUpdated;    // 把新的观测数据 写入头部  这是个环  扩展要gas 
         self[indexUpdated] = transform(last, blockTimestamp, tick, liquidity);
     }
 
@@ -115,7 +116,7 @@ library Oracle {
         if (next <= current) return current;
         // store in each slot to prevent fresh SSTOREs in swaps
         // this data will not be used because the initialized boolean is still false
-        for (uint16 i = current; i < next; i++) self[i].blockTimestamp = 1;
+        for (uint16 i = current; i < next; i++) self[i].blockTimestamp = 1;  // 扩展要 钱 
         return next;
     }
 
@@ -176,7 +177,7 @@ library Oracle {
             bool targetAtOrAfter = lte(time, beforeOrAt.blockTimestamp, target);
 
             // check if we've found the answer!
-            if (targetAtOrAfter && lte(time, target, atOrAfter.blockTimestamp)) break;
+            if (targetAtOrAfter && lte(time, target, atOrAfter.blockTimestamp)) break;  //递归 
 
             if (!targetAtOrAfter) r = i - 1;
             else l = i + 1;

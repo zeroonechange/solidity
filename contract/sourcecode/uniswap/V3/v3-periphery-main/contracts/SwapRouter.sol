@@ -27,7 +27,7 @@ contract SwapRouter is
     Multicall,
     SelfPermit
 {
-    using Path for bytes;
+    using Path for bytes;  // 换钱路径 
     using SafeCast for uint256;
 
     /// @dev Used as the placeholder value for amountInCached, because the computed amount in for an exact output swap

@@ -3,6 +3,20 @@
 ## V3
 ```c
 
+个人觉得 UniswapV3 这种池子方式缺点就是  流动性分散  不同费率不同的池子 
+目前看defi 锁仓排名  Lido  10.4b   MakerDao 7.7b    AAVE  5.52b    Curve 4.4b   uniswap 3.7b
+swap的时候  计算太繁琐了  先根据tick 算出下一个tick  然后获得这个区间的流动性  
+把这个池子抽干 计算手续费  更新 tick信息  还需要换多少钱 
+循环计算  最后才得到最终换多少   
+
+就好比之前打 acm 比赛的时候   换个角度  应该会得到一个更通俗的算法 这个虽然精巧 感觉是不断拼凑形成的 
+
+作为最早的defi 项目   项目代码之间的很多计算方式确实值得学习  尤其是二进制运算  数学对数  开根号的运算方式  保持精度 
+
+目前暂时告一段落   下一步该去实战  看看 Euler 的攻击过程  并用 foundry 还原 
+为啥黑客要在 aave上面借贷 发起闪电贷  而不是 uniswap v3    --- 2023/3/20
+  
+
 
 官方文档                            https://docs.uniswap.org/contracts/v2/overview
 Uniswap V3 Book 中文版				https://y1cunhui.github.io/uniswapV3-book-zh-cn/
@@ -25,7 +39,7 @@ Uniswap v3 详解（六）：闪电贷		 https://paco0x.org/uniswap-v3-6/
 V2和V3的区别挺多的  最核心就是 tick  position  的概念
 费率记录方式也很独特  记录外侧手续费总额   这个是一个全局的 拿收到的总费率/总流动性
 存放的现货价格是根号  利于计算 
-用Q64.64 因为solidity不支持浮点运算  用了一个第三方库 https://github.com/abdk-consulting/abdk-libraries-solidity
+用 Q64.64 因为solidity不支持浮点运算  用了一个第三方库 https://github.com/abdk-consulting/abdk-libraries-solidity
 还有就是 tick 和价格的转换  非常复杂  用了很多 magic number 目前没搞明白 
 流动性token也不再是之前的  而是NFT类型的 
 预言机这部分 暂时不知道用来干啥的 应该是套利之类的 

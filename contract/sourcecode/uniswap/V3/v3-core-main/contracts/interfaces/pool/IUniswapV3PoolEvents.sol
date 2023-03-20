@@ -3,6 +3,8 @@ pragma solidity >=0.5.0;
 
 /// @title Events emitted by a pool
 /// @notice Contains all events emitted by the pool
+
+// 事件汇总  初始化  铸造  收钱  。。。
 interface IUniswapV3PoolEvents {
     /// @notice Emitted exactly once by a pool when #initialize is first called on the pool
     /// @dev Mint/Burn/Swap cannot be emitted by the pool before Initialize

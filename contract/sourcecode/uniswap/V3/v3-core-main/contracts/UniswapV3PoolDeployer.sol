@@ -15,7 +15,7 @@ contract UniswapV3PoolDeployer is IUniswapV3PoolDeployer {
     }
 
     /// @inheritdoc IUniswapV3PoolDeployer
-    Parameters public override parameters;
+    Parameters public override parameters; // 还能这么写的  这个parameters在接口是个方法 
 
     /// @dev Deploys a pool with the given parameters by transiently setting the parameters storage slot and then
     /// clearing it after deploying the pool.
@@ -32,7 +32,7 @@ contract UniswapV3PoolDeployer is IUniswapV3PoolDeployer {
         int24 tickSpacing
     ) internal returns (address pool) {
         parameters = Parameters({factory: factory, token0: token0, token1: token1, fee: fee, tickSpacing: tickSpacing});
-        pool = address(new UniswapV3Pool{salt: keccak256(abi.encode(token0, token1, fee))}());
-        delete parameters;
+        pool = address(new UniswapV3Pool{salt: keccak256(abi.encode(token0, token1, fee))}()); //  加盐
+        delete parameters;   // 用完了就删除  节省 gas  
     }
 }

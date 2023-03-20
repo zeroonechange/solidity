@@ -3,6 +3,9 @@ pragma solidity >=0.5.0;
 
 /// @title Pool state that never changes
 /// @notice These parameters are fixed for a pool forever, i.e., the methods will always return the same values
+
+//  不明白为啥要这样写  接口定义函数   实际用 数据结构去 override   继承是这样用的吗?
+
 interface IUniswapV3PoolImmutables {
     /// @notice The contract that deployed the pool, which must adhere to the IUniswapV3Factory interface
     /// @return The contract address

@@ -4,6 +4,8 @@ pragma solidity >=0.5.0;
 /// @title Pool state that can change
 /// @notice These methods compose the pool's state, and can change with any frequency including multiple times
 /// per transaction
+
+// 定义全局变量  数据结构 slot0  全局总费用   协议费用  流动性  tick  position-头寸  tick-bitmap  预言机观测点 
 interface IUniswapV3PoolState {
     /// @notice The 0th storage slot in the pool stores many values, and is exposed as a single method to save gas
     /// when accessed externally.

@@ -68,7 +68,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
         // represented as an integer denominator (1/x)%
         uint8 feeProtocol;
         // whether the pool is locked
-        bool unlocked;
+        bool unlocked;    // 给协议 枷锁  避免重入攻击 
     }
     /// @inheritdoc IUniswapV3PoolState
     Slot0 public override slot0;
@@ -96,7 +96,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
     /// @inheritdoc IUniswapV3PoolState
     mapping(bytes32 => Position.Info) public override positions;
     /// @inheritdoc IUniswapV3PoolState
-    Oracle.Observation[65535] public override observations;
+    Oracle.Observation[65535] public override observations;  // 预言机使用 
 
     /// @dev Mutually exclusive reentrancy protection into the pool to/from a method. This method also prevents entrance
     /// to a function before the pool is initialized. The reentrancy guard is required throughout the contract because
@@ -118,7 +118,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
         int24 _tickSpacing;
         (factory, token0, token1, fee, _tickSpacing) = IUniswapV3PoolDeployer(msg.sender).parameters();
         tickSpacing = _tickSpacing;
-
+        // 传递一个 storage 对象 很耗 gas吗   区别是啥?  传递进去 如果里面的函数改变了 会导致改变
         maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(_tickSpacing);
     }
 
