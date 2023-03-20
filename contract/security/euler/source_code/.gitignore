@@ -1,0 +1,15 @@
+/euler-addresses.json
+/euler-addresses-*.json
+/node_modules/
+/artifacts/
+/cache/
+/.idea/
+/coverage.json
+/coverage/
+.DS_Store
+.env
+.env.*
+notes.txt
+detect-permit-errors.log
+accountsAtRiskOfViolation.json
+accountsInViolation.json
