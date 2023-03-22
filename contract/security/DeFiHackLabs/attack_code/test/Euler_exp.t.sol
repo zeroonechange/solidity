@@ -24,6 +24,33 @@ import "./interface.sol";
 // 9) Withdraw all token amount from Euler using withdraw() => withdrew 38.9M DAI from Euler
 // 10) Repay flash loans
 
+/*
+后续吃瓜
+https://etherscan.io/tx/0xcc73d182db1f36dbadf14205de7d543cfd1343396b50d34c768529aaab46a1c0
+https://etherscan.io/tx/0x9c25b6ca65c5bd0597a13ceae6f0d6edcef4b10279f338114550926ad0387ce4
+https://etherscan.io/tx/0x054409f252ac293a0ed34108b25e5906476817c5489bd3e98a5d3e1ee0825020
+https://etherscan.io/tx/0xbbafbaab85c20d4ce513f3f1f2873590a0c6db521e84c202dde23e667578f511
+https://etherscan.io/tx/0xbbafbaab85c20d4ce513f3f1f2873590a0c6db521e84c202dde23e667578f511
+https://etherscan.io/tx/0x1fd6d2e67a2ac4cf7c1718cc3058d5625171b95d66744801c97a4de54a41197b
+https://etherscan.io/tx/0xe1fff14e317968591a8dac40630ae572bea943a2758029a44ce5bdd28aa26635
+https://etherscan.io/tx/0x47708ec86525944dc5d3085aa58d8164e6065b99d1fb88ba95762033c393c01a
+https://etherscan.io/tx/0xfe256e86a6d9f50b558e1c66a5174bbe8e79fc316e2ed75dfdc743bdd1c905d8
+
+We want to make this easy on all those affected. No intention of keeping what is not ours. Setting up secure communication. Let us come to an agreement.
+    Message received. Let's talk in private on blockscan via the Euler Deployer address and one of your EOAs, via signed messages over email at contact@euler.foundation, or any other channel of your choice. Reply with your preference.
+    Be very careful using that decryption tool. The simplest way out here is to return funds.
+    Do not try to view that message under any circumstance. Do not enter your private key anywhere. Reminder that your machine may also be compromised.
+    Do NOT use the suggested decryption tool. It has an old version of ellyptic, which has a vulnerability:
+    https://security.snyk.io/package/npm/elliptic/6.4.0
+We still want to do the right thing returning funds to the Euler team. Will communicate shortly.
+Euler: from   INTACH3ZZ@PROTONMAIL.COM
+...
+
+https://etherscan.io/txs?a=0xee009faf00cf54c1b4387829af7a8dc5f0c8c8c5
+搜索关键词:  Euler Finance Exploiter 2
+
+*/
+
 interface EToken {
     function deposit(uint256 subAccountId, uint256 amount) external;
     function mint(uint256 subAccountId, uint256 amount) external;
