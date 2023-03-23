@@ -52,7 +52,7 @@ claimAllReward 使用的就是这个价格   提取出了很多 EGD token
             roll: 調整區塊高度
             warp: 調整 block.timestamp
 
-    2. IERC-20的使用套路 approval - transfer 
+    2. IERC-20的使用套路 approval - transfer
 
     3. 闪电贷 可以 再套一层  闪电贷-闪电贷  通过 calldata 来区分是哪一个
 
